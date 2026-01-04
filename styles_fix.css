@@ -1,0 +1,11 @@
+/* Design card hover overlay needs to be above dark overlay */
+.design-card>div[class*="bg-gradient-to-t"] {
+    z-index: 2;
+    position: relative;
+}
+
+
+
+.group {
+    opacity: 1 !important;
+}

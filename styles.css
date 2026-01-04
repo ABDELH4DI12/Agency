@@ -1,0 +1,398 @@
+/* Custom Styles for Créative Agency */
+
+/* Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+/* Hero Gradient */
+.hero-gradient {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.3), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(234, 179, 8, 0.1), transparent);
+}
+
+/* Floating Shapes */
+.floating-shape {
+    pointer-events: none;
+}
+
+.shape-1 {
+    top: 20%;
+    left: 10%;
+    animation: float1 8s ease-in-out infinite;
+}
+
+.shape-2 {
+    top: 40%;
+    right: 5%;
+    animation: float2 10s ease-in-out infinite;
+}
+
+.shape-3 {
+    bottom: 20%;
+    left: 30%;
+    animation: float3 12s ease-in-out infinite;
+}
+
+@keyframes float1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+}
+
+@keyframes float2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-40px, 20px) scale(0.9);
+    }
+}
+
+@keyframes float3 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(20px, 40px) scale(1.05);
+    }
+}
+
+/* Loader */
+#loader {
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-text {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(0.98);
+    }
+}
+
+/* Navigation */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #8B5CF6, #EAB308);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Mobile Menu */
+.mobile-link {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+#mobile-menu.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#mobile-menu.active .mobile-link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Infinite Marquee */
+.marquee-container {
+    width: 100%;
+}
+
+.marquee-track {
+    animation: marquee 20s linear infinite;
+    width: fit-content;
+    will-change: transform;
+}
+
+.marquee-track-reverse {
+    animation: marquee-reverse 20s linear infinite;
+    width: fit-content;
+    will-change: transform;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marquee-reverse {
+    from {
+        transform: translateX(-50%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.marquee-container:hover .marquee-track,
+.marquee-container:hover .marquee-track-reverse {
+    animation-play-state: paused;
+}
+
+/* Project Cards Grid */
+.project-card {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.3);
+}
+
+.project-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Stats Animation */
+.stat-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stat-item.animated {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    animation: fadeInUp 1s ease 0.5s forwards;
+    opacity: 1;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #8B5CF6, #6D28D9);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #A78BFA, #8B5CF6);
+}
+
+/* Text Reveal Animation */
+.reveal-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-text.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* About Images */
+.about-img-1,
+.about-img-2 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about-img-1.revealed {
+    opacity: 1;
+    transform: translateY(0) rotate(3deg);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-img-2.revealed {
+    opacity: 1;
+    transform: translateY(0) rotate(-3deg);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+/* CTA Section */
+.cta-content {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cta-content.revealed {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hero Animations */
+.hero-tag,
+.hero-title,
+.hero-desc,
+.hero-btns {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Magnetic Button Effect */
+.magnetic-btn {
+    transition: transform 0.3s ease;
+}
+
+/* Gradient Text Animation */
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animated-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+}
+
+/* Design card hover overlay needs to be above dark overlay */
+.design-card>div[class*="bg-gradient-to-t"] {
+    z-index: 2;
+    position: relative;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .marquee-track-reverse {
+        animation-duration: 20s;
+    }
+}
+
+/* Slow Pulse Animation for Background Blobs */
+@keyframes pulse-slow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+/* Infinite Marquee Animation */
+.animate-marquee {
+    animation: marquee 20s linear infinite;
+}
+
+.animate-marquee2 {
+    animation: marquee2 20s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes marquee2 {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 8s ease-in-out infinite;
+}
