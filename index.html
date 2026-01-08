@@ -32,7 +32,7 @@
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-difference">
-        <a href="#" class="logo"><img loading="lazy" decoding="async" src="logo.png" alt="Creative Horizons" class="h-12 w-auto"></a>
+        <a href="#" class="logo"><img loading="eager" src="logo.png" alt="Creative Horizons" class="h-12 w-auto"></a>
         <div class="nav-links hidden md:flex gap-8 text-sm font-medium">
             <a href="#home" class="nav-link hover:text-purple-400 transition-colors">Home</a>
             <a href="#about" class="nav-link hover:text-purple-400 transition-colors">About</a>
@@ -183,11 +183,11 @@
             <!-- Projects Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project 1: Artisan Coffee -->
-                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/KzpCcKQG/Screenshot-from-2026-01-08-00-53-14.png"
+                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-auto project-card bg-gray-900 border border-white/10"></div>
+                    <img src="https://i.ibb.co/KzpCcKQG/Screenshot-from-2026-01-08-00-53-14.png"
                         alt="Artisan Coffee Website"
-                        class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        class="w-full h-auto object-contain">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
                     <div
                         class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                         <span
@@ -203,11 +203,11 @@
                 </div>
 
                 <!-- Project 2: Savory Kitchen -->
-                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/dw8SNSpk/Screenshot-from-2026-01-08-00-54-54.png"
+                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-auto project-card bg-gray-900 border border-white/10">
+                    <img src="https://i.ibb.co/dw8SNSpk/Screenshot-from-2026-01-08-00-54-54.png"
                         alt="Savory Kitchen Website"
-                        class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        class="w-full h-auto object-contain">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
                     <div
                         class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                         <span
@@ -223,11 +223,11 @@
                 </div>
 
                 <!-- Project 3: LUXE Motors -->
-                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/FqfCdLmp/Screenshot-from-2026-01-08-00-55-59.png"
+                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-auto project-card bg-gray-900 border border-white/10"></div>
+                    <img src="https://i.ibb.co/FqfCdLmp/Screenshot-from-2026-01-08-00-55-59.png"
                         alt="LUXE Motors Website"
-                        class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        class="w-full h-auto object-contain">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
                     <div
                         class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                         <span
@@ -675,7 +675,7 @@
                 <!-- Photo 1: Interior (Portrait - tall image) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[600px] md:h-[700px] lg:col-span-1">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/jPSnx7VX/interieur-photography.jpg"
+                    <img src="https://img.freepik.com/free-photo/view-futuristic-light-lamp-design_23-2151037575.jpg"
                         alt="Interior Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
@@ -690,7 +690,7 @@
                 <!-- Photo 2: Architecture (Landscape - wide image) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[400px] md:h-[700px] lg:col-span-2">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/DHdq3pw6/Architecture-photography.jpg"
+                    <img src="https://img.freepik.com/free-photo/grayscale-shot-lake-middle-city-buildings-cloudy-sky_181624-17493.jpg"
                         alt="Architecture Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
@@ -705,7 +705,7 @@
                 <!-- Photo 3: Wedding (Landscape - wide image) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[400px] md:h-[500px] lg:col-span-2">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/CpD0CtsZ/weeding-boquet-large-width.jpg"
+                    <img src="https://img.freepik.com/free-photo/classic-white-gold-wedding-rings-red-bouquet_8353-8012.jpg"
                         alt="Wedding Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
@@ -720,7 +720,7 @@
                 <!-- Photo 4: Street (Landscape - wide image, displayed as portrait slot) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[600px] md:h-[500px] lg:col-span-1">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/bjnmVtB8/street-photography.jpg"
+                    <img src="https://img.freepik.com/free-photo/photographer-exploring-abandoned-location_23-2150974333.jpg"
                         alt="Street Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
@@ -734,7 +734,7 @@
                 <!-- Photo 5: Products (Landscape - wide image, full width) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[400px] md:h-[500px] lg:col-span-3">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/qYBhLVJj/products-large.jpg"
+                    <img src="https://img.freepik.com/free-photo/photography-studio-with-equipment-items-arrangement_23-2150254625.jpg"
                         alt="Product Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
@@ -770,7 +770,7 @@
                 <div
                     class="group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2">
                     <div class="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
-                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
                             alt="Apparel"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
@@ -790,7 +790,7 @@
                 <div
                     class="group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 hover:border-violet-500/50 transition-all duration-500 hover:-translate-y-2">
                     <div class="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
-                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1577937927133-66ef06acdf18?auto=format&fit=crop&w=800&q=80"
+                        <img src="https://images.unsplash.com/photo-1577937927133-66ef06acdf18?auto=format&fit=crop&w=800&q=80"
                             alt="Drinkware"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
@@ -812,7 +812,7 @@
                 <div
                     class="group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-2">
                     <div class="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
-                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=800&q=80"
+                        <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=800&q=80"
                             alt="Stationery"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
