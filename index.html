@@ -16,8 +16,9 @@
             theme: {
                 extend: {
                     colors: {
-                        purple: { 500: '#8B5CF6', 600: '#7C3AED', 700: '#6D28D9', 800: '#5B21B6', 900: '#4C1D95' },
-                        yellow: { 400: '#FACC15', 500: '#EAB308', 600: '#CA8A04' }
+                        purple: { 400: '#C084FC', 500: '#A855F7', 600: '#9333EA', 700: '#7E22CE', 800: '#6B21A8', 900: '#581C87' },
+                        violet: { 300: '#C4B5FD', 400: '#A78BFA', 500: '#8B5CF6' },
+                        fuchsia: { 400: '#E879F9', 500: '#D946EF' }
                     },
                     fontFamily: { outfit: ['Outfit', 'sans-serif'] }
                 }
@@ -31,7 +32,7 @@
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-difference">
-        <a href="#" class="logo text-2xl font-black tracking-tight">CRÉATIVE<span class="text-yellow-400">.</span></a>
+        <a href="#" class="logo"><img loading="lazy" decoding="async" src="logo.png" alt="Creative Horizons" class="h-12 w-auto"></a>
         <div class="nav-links hidden md:flex gap-8 text-sm font-medium">
             <a href="#home" class="nav-link hover:text-purple-400 transition-colors">Home</a>
             <a href="#about" class="nav-link hover:text-purple-400 transition-colors">About</a>
@@ -64,19 +65,19 @@
         <div class="absolute inset-0 hero-gradient"></div>
 
         <!-- Floating Shapes -->
-        <div class="floating-shape shape-1 absolute w-72 h-72 rounded-full bg-purple-500/20 blur-3xl"></div>
-        <div class="floating-shape shape-2 absolute w-96 h-96 rounded-full bg-yellow-400/10 blur-3xl"></div>
-        <div class="floating-shape shape-3 absolute w-64 h-64 rounded-full bg-purple-700/20 blur-3xl"></div>
+        <div class="floating-shape shape-1 absolute w-72 h-72 rounded-full bg-purple-600/20 blur-3xl"></div>
+        <div class="floating-shape shape-2 absolute w-96 h-96 rounded-full bg-violet-400/15 blur-3xl"></div>
+        <div class="floating-shape shape-3 absolute w-64 h-64 rounded-full bg-fuchsia-500/15 blur-3xl"></div>
 
         <div class="hero-content text-center z-10 max-w-6xl">
             <div class="overflow-hidden mb-4">
-                <p class="hero-tag text-yellow-400 text-lg md:text-xl font-medium tracking-widest uppercase">Design &
+                <p class="hero-tag text-violet-300 text-lg md:text-xl font-medium tracking-widest uppercase">Design &
                     Development Agency</p>
             </div>
             <div class="overflow-hidden">
                 <h1 class="hero-title text-5xl md:text-7xl lg:text-9xl font-black leading-none tracking-tight mb-6">
                     We Create<br><span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-yellow-400">Digital
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-fuchsia-400">Digital
                         Magic</span>
                 </h1>
             </div>
@@ -105,11 +106,15 @@
         </div>
     </section>
 
-    <section id="about" class="py-32 px-4 md:px-16 relative">
+    <section id="about" class="py-32 px-4 md:px-16 relative overflow-hidden">
+        <!-- Background decorations -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl"></div>
+        
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-2 gap-16 items-center">
                 <div class="about-content">
-                    <p class="text-yellow-400 font-medium tracking-widest uppercase mb-4 reveal-text">Who We Are</p>
+                    <p class="text-violet-300 font-medium tracking-widest uppercase mb-4 reveal-text">Who We Are</p>
                     <h2 class="text-4xl md:text-6xl font-black mb-8 reveal-text">
                         Crafting <span class="text-purple-500">Excellence</span> Since Day One
                     </h2>
@@ -125,8 +130,8 @@
                             <p class="text-gray-500 text-sm mt-2">Projects Done</p>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number text-4xl font-black text-yellow-400" data-target="50">0</span><span
-                                class="text-yellow-400 text-4xl font-black">+</span>
+                            <span class="stat-number text-4xl font-black text-violet-300" data-target="50">0</span><span
+                                class="text-violet-300 text-4xl font-black">+</span>
                             <p class="text-gray-500 text-sm mt-2">Happy Clients</p>
                         </div>
                         <div class="stat-item">
@@ -136,16 +141,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="about-images relative h-[500px]">
-                    <div class="about-img-1 absolute top-0 right-0 w-3/4 h-80 rounded-2xl overflow-hidden shadow-2xl">
-                        <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/pizza-promo-poster-design-template-a8debc139f49f58c4f48d1efe8f2919b_screen.jpg?ts=1660326335"
-                            alt="Team" class="w-full h-full object-cover">
+                
+                <!-- Abstract design element instead of images -->
+                <div class="relative h-[500px] flex items-center justify-center">
+                    <!-- Decorative shapes -->
+                    <div class="absolute w-64 h-64 border-2 border-purple-500/30 rounded-3xl rotate-12 animate-pulse"></div>
+                    <div class="absolute w-72 h-72 border-2 border-violet-400/20 rounded-3xl -rotate-6"></div>
+                    <div class="absolute w-48 h-48 bg-gradient-to-br from-purple-600/20 to-fuchsia-500/20 rounded-3xl rotate-45 backdrop-blur-sm"></div>
+                    
+                    <!-- Central element -->
+                    <div class="relative z-10 text-center">
+                        <div class="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-600 to-fuchsia-500 flex items-center justify-center shadow-2xl shadow-purple-500/30">
+                            <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-2xl font-bold text-white mb-2">Creative Vision</p>
+                        <p class="text-gray-500">Innovation meets design</p>
                     </div>
-                    <div
-                        class="about-img-2 absolute bottom-0 left-0 w-2/3 h-64 rounded-2xl overflow-hidden shadow-2xl border-4 border-gray-950">
-                        <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/pizza-promo-poster-design-template-a8debc139f49f58c4f48d1efe8f2919b_screen.jpg?ts=1660326335"
-                            alt="Office" class="w-full h-full object-cover">
-                    </div>
+                    
+                    <!-- Floating dots -->
+                    <div class="absolute top-10 right-20 w-3 h-3 bg-purple-500 rounded-full animate-bounce"></div>
+                    <div class="absolute bottom-20 left-10 w-2 h-2 bg-violet-400 rounded-full animate-bounce" style="animation-delay: 0.5s"></div>
+                    <div class="absolute top-1/2 right-10 w-4 h-4 bg-fuchsia-500/50 rounded-full animate-pulse"></div>
                 </div>
             </div>
         </div>
@@ -155,133 +173,71 @@
         <div class="max-w-7xl mx-auto">
             <!-- Section Header -->
             <div class="mb-20 text-center">
-                <p class="text-yellow-400 font-medium tracking-widest uppercase mb-4 text-sm reveal-text">Selected Works
+                <p class="text-violet-300 font-medium tracking-widest uppercase mb-4 text-sm reveal-text">Selected Works
                 </p>
                 <h2 class="text-4xl md:text-6xl font-black text-white reveal-text">Digital <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-yellow-400">Masterpieces</span>
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-fuchsia-400">Masterpieces</span>
                 </h2>
             </div>
 
             <!-- Projects Grid -->
-            <!-- Projects Grid (6 Items) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
+                <!-- Project 1: Artisan Coffee -->
                 <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img src="https://images.unsplash.com/photo-1481487484168-9b930d55208d?auto=format&fit=crop&w=800&q=80"
-                        alt="Project 1"
-                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img loading="lazy" decoding="async" src="https://i.ibb.co/KzpCcKQG/Screenshot-from-2026-01-08-00-53-14.png"
+                        alt="Artisan Coffee Website"
+                        class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     <div
                         class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                         <span
-                            class="px-3 py-1 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">E-commerce</span>
-                        <h3 class="text-3xl font-black text-white mb-2">Luxe Fashion</h3>
+                            class="px-3 py-1 bg-amber-600/20 text-amber-400 border border-amber-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">E-commerce</span>
+                        <h3 class="text-3xl font-black text-white mb-2">Artisan Coffee</h3>
                         <p class="text-gray-400 text-sm mb-4 opacity-100 transition-opacity duration-500 delay-100">
-                            Premium shopping experience with AI recommendations.</p>
+                            Premium coffee shop with online ordering, product showcase, and customer testimonials.</p>
+                        <div class="flex gap-2 opacity-100 transition-opacity duration-500 delay-200">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">HTML/CSS</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Savory Kitchen -->
+                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
+                    <img loading="lazy" decoding="async" src="https://i.ibb.co/dw8SNSpk/Screenshot-from-2026-01-08-00-54-54.png"
+                        alt="Savory Kitchen Website"
+                        class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    <div
+                        class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <span
+                            class="px-3 py-1 bg-orange-600/20 text-orange-400 border border-orange-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">Restaurant</span>
+                        <h3 class="text-3xl font-black text-white mb-2">Savory Kitchen</h3>
+                        <p class="text-gray-400 text-sm mb-4 opacity-100 transition-opacity duration-500 delay-100">
+                            Premium dining platform with menu showcase, online ordering, and admin dashboard.</p>
                         <div class="flex gap-2 opacity-100 transition-opacity duration-500 delay-200">
                             <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">React</span>
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Shopify</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Node.js</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
+                <!-- Project 3: LUXE Motors -->
                 <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
-                        alt="Project 2"
-                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img loading="lazy" decoding="async" src="https://i.ibb.co/FqfCdLmp/Screenshot-from-2026-01-08-00-55-59.png"
+                        alt="LUXE Motors Website"
+                        class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     <div
                         class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                         <span
-                            class="px-3 py-1 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">Fintech</span>
-                        <h3 class="text-3xl font-black text-white mb-2">Nova Bank</h3>
+                            class="px-3 py-1 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">Automotive</span>
+                        <h3 class="text-3xl font-black text-white mb-2">LUXE Motors</h3>
                         <p class="text-gray-400 text-sm mb-4 opacity-100 transition-opacity duration-500 delay-100">
-                            Next-gen banking dashboard with real-time data.</p>
-                        <div class="flex gap-2 opacity-100 transition-opacity duration-500 delay-200">
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Vue.js</span>
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">D3.js</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
-                        alt="Project 3"
-                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                    <div
-                        class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="px-3 py-1 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">SaaS</span>
-                        <h3 class="text-3xl font-black text-white mb-2">TaskFlow</h3>
-                        <p class="text-gray-400 text-sm mb-4 opacity-100 transition-opacity duration-500 delay-100">
-                            Productivity platform for remote teams.</p>
+                            Luxury electric vehicle showcase with performance specs, gallery, and configurator.</p>
                         <div class="flex gap-2 opacity-100 transition-opacity duration-500 delay-200">
                             <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Next.js</span>
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Supabase</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4 -->
-                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&w=800&q=80"
-                        alt="Project 4"
-                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                    <div
-                        class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="px-3 py-1 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">Real
-                            Estate</span>
-                        <h3 class="text-3xl font-black text-white mb-2">Urban Living</h3>
-                        <p class="text-gray-400 text-sm mb-4 opacity-100 transition-opacity duration-500 delay-100">
-                            Modern property listing and virtual tour platform.</p>
-                        <div class="flex gap-2 opacity-100 transition-opacity duration-500 delay-200">
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">React</span>
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Mapbox</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 5 -->
-                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
-                        alt="Project 5"
-                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                    <div
-                        class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="px-3 py-1 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">Hospitality</span>
-                        <h3 class="text-3xl font-black text-white mb-2">The Grand</h3>
-                        <p class="text-gray-400 text-sm mb-4 opacity-100 transition-opacity duration-500 delay-100">
-                            Luxury hotel booking with immersive 3D views.</p>
-                        <div class="flex gap-2 opacity-100 transition-opacity duration-500 delay-200">
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Webflow</span>
                             <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">GSAP</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 6 -->
-                <div class="group relative rounded-3xl overflow-hidden cursor-pointer h-[500px] project-card">
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80"
-                        alt="Project 6"
-                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                    <div
-                        class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="px-3 py-1 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-md">Gaming</span>
-                        <h3 class="text-3xl font-black text-white mb-2">Cyber Core</h3>
-                        <p class="text-gray-400 text-sm mb-4 opacity-100 transition-opacity duration-500 delay-100">
-                            Esports tournament platform with live streaming.</p>
-                        <div class="flex gap-2 opacity-100 transition-opacity duration-500 delay-200">
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Next.js</span>
-                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs text-white">Twitch API</span>
                         </div>
                     </div>
                 </div>
@@ -295,16 +251,16 @@
             <div
                 class="absolute top-[10%] left-[20%] w-[30%] h-[30%] bg-purple-900/20 rounded-full blur-[100px] mix-blend-screen animate-pulse-slow">
             </div>
-            <div class="absolute bottom-[10%] right-[20%] w-[40%] h-[40%] bg-yellow-900/10 rounded-full blur-[120px] mix-blend-screen animate-pulse-slow"
+            <div class="absolute bottom-[10%] right-[20%] w-[40%] h-[40%] bg-purple-900/10 rounded-full blur-[120px] mix-blend-screen animate-pulse-slow"
                 style="animation-delay: 2s;"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 md:px-8 w-full z-10 relative">
             <div class="text-center mb-20">
-                <p class="text-yellow-400 font-medium tracking-widest uppercase mb-4 text-sm reveal-text">Our Portfolio
+                <p class="text-violet-300 font-medium tracking-widest uppercase mb-4 text-sm reveal-text">Our Portfolio
                 </p>
                 <h2 class="text-4xl md:text-6xl font-black text-white reveal-text">Curated <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-yellow-400">Collections</span>
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-fuchsia-400">Collections</span>
                 </h2>
             </div>
 
@@ -339,16 +295,16 @@
 
                 <!-- Category 2: Exhibition Panels -->
                 <!-- Category 2: Panels -->
-                <div class="design-category-card group relative h-[320px] rounded-3xl overflow-hidden cursor-pointer lg:col-span-3 bg-[#0a0a0a] border border-white/10 hover:border-yellow-500/50 transition-all duration-500"
+                <div class="design-category-card group relative h-[320px] rounded-3xl overflow-hidden cursor-pointer lg:col-span-3 bg-[#0a0a0a] border border-white/10 hover:border-violet-500/50 transition-all duration-500"
                     data-category="panels">
                     <div
-                        class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-transparent to-transparent opacity-1 group-hover:opacity-100 transition-opacity duration-500">
+                        class="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-transparent opacity-1 group-hover:opacity-100 transition-opacity duration-500">
                     </div>
 
                     <div class="absolute inset-0 p-8 flex flex-col justify-between">
                         <div class="flex justify-between items-start">
-                            <span class="text-yellow-500 font-mono text-sm tracking-widest uppercase">02</span>
-                            <svg class="w-8 h-8 text-white/20 group-hover:text-yellow-500 transform transition-all duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"
+                            <span class="text-violet-400 font-mono text-sm tracking-widest uppercase">02</span>
+                            <svg class="w-8 h-8 text-white/20 group-hover:text-violet-400 transform transition-all duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -357,7 +313,7 @@
 
                         <div class="relative z-10">
                             <h3
-                                class="text-4xl md:text-5xl font-black text-white mb-2 group-hover:text-yellow-400 transition-colors duration-300">
+                                class="text-4xl md:text-5xl font-black text-white mb-2 group-hover:text-violet-300 transition-colors duration-300">
                                 Panels</h3>
                             <p class="text-gray-500 group-hover:text-gray-300 transition-colors">Trade Shows &
                                 Exhibitions</p>
@@ -495,9 +451,9 @@
                 <div
                     class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px] -z-10">
                 </div>
-                <span class="text-yellow-400 font-bold tracking-widest uppercase mb-4 block">The Art of Montage</span>
+                <span class="text-violet-300 font-bold tracking-widest uppercase mb-4 block">The Art of Montage</span>
                 <h2 class="text-5xl md:text-8xl font-black text-white mb-8 tracking-tight">WE EDIT <br><span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500">EMOTIONS</span>
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500">EMOTIONS</span>
                 </h2>
                 <p class="text-gray-300 text-xl max-w-2xl mx-auto leading-relaxed">It's not just about cutting clips.
                     It's about rhythm, color, and the invisible flow that turns footage into a feeling.</p>
@@ -524,7 +480,7 @@
                             class="w-32 h-2 bg-gradient-to-l from-pink-500 to-transparent rounded-full transform translate-x-8 group-hover:translate-x-0 transition-transform duration-700 delay-75">
                         </div>
                         <div
-                            class="w-20 h-2 bg-gradient-to-r from-yellow-500 to-transparent rounded-full transform -translate-x-4 group-hover:translate-x-0 transition-transform duration-700 delay-150">
+                            class="w-20 h-2 bg-gradient-to-r from-violet-500 to-transparent rounded-full transform -translate-x-4 group-hover:translate-x-0 transition-transform duration-700 delay-150">
                         </div>
 
                         <h3 class="text-3xl font-black text-white mt-8 text-center">Perfect<br>Rhythm</h3>
@@ -536,17 +492,17 @@
 
                 <!-- Card 2: Color (Vibrancy) -->
                 <div
-                    class="group relative h-[350px] rounded-3xl overflow-hidden border border-white/10 bg-gray-900/50 backdrop-blur-sm montage-item hover:border-yellow-500/50 transition-colors duration-500">
+                    class="group relative h-[350px] rounded-3xl overflow-hidden border border-white/10 bg-gray-900/50 backdrop-blur-sm montage-item hover:border-violet-500/50 transition-colors duration-500">
                     <!-- Color Shift Background -->
                     <div
-                        class="absolute inset-0 bg-gradient-to-br from-yellow-400/10 via-pink-500/10 to-purple-600/10 opacity-50 group-hover:opacity-100 transition-opacity duration-700">
+                        class="absolute inset-0 bg-gradient-to-br from-violet-400/10 via-pink-500/10 to-purple-600/10 opacity-50 group-hover:opacity-100 transition-opacity duration-700">
                     </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
 
                     <div class="absolute inset-0 flex flex-col items-center justify-center">
                         <div class="relative w-32 h-32 mb-8">
                             <div
-                                class="absolute inset-0 rounded-full border-2 border-yellow-500/30 group-hover:scale-110 transition-transform duration-700">
+                                class="absolute inset-0 rounded-full border-2 border-violet-500/30 group-hover:scale-110 transition-transform duration-700">
                             </div>
                             <div
                                 class="absolute inset-4 rounded-full border-2 border-pink-500/30 group-hover:scale-125 transition-transform duration-700 delay-75">
@@ -555,7 +511,7 @@
                                 class="absolute inset-8 rounded-full border-2 border-purple-500/30 group-hover:scale-150 transition-transform duration-700 delay-150">
                             </div>
                             <div
-                                class="absolute inset-0 blur-2xl bg-gradient-to-r from-yellow-500 to-purple-600 opacity-20 group-hover:opacity-40 transition-opacity duration-500">
+                                class="absolute inset-0 blur-2xl bg-gradient-to-r from-violet-500 to-purple-600 opacity-20 group-hover:opacity-40 transition-opacity duration-500">
                             </div>
                         </div>
 
@@ -707,72 +663,86 @@
     <section id="photography" class="py-32 bg-black relative">
         <div class="max-w-7xl mx-auto px-4 md:px-16">
             <div class="mb-20 text-center">
-                <p class="text-yellow-400 font-medium tracking-widest uppercase mb-4 text-sm reveal-text">Captured
+                <p class="text-violet-300 font-medium tracking-widest uppercase mb-4 text-sm reveal-text">Captured
                     Moments
                 </p>
                 <h2 class="text-4xl md:text-6xl font-black text-white reveal-text">Visual <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-yellow-400">Storytelling</span>
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-fuchsia-400">Storytelling</span>
                 </h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Photo 1: Portrait -->
+                <!-- Photo 1: Interior (Portrait - tall image) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[600px] md:h-[700px] lg:col-span-1">
-                    <img src="https://images.unsplash.com/photo-1560930950-5cc20e80e392?auto=format&fit=crop&w=800&q=80"
-                        alt="Moroccan Man"
+                    <img loading="lazy" decoding="async" src="https://i.ibb.co/jPSnx7VX/interieur-photography.jpg"
+                        alt="Interior Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
                     </div>
                     <div class="absolute bottom-8 left-8">
                         <span
-                            class="text-yellow-400 font-bold uppercase tracking-wider text-sm mb-2 block">Portrait</span>
-                        <h3 class="text-2xl font-bold text-white">Desert Nomad</h3>
+                            class="text-violet-300 font-bold uppercase tracking-wider text-sm mb-2 block">Interior</span>
+                        <h3 class="text-2xl font-bold text-white">Elegant Spaces</h3>
                     </div>
                 </div>
 
-                <!-- Photo 2: Landscape (Wide) -->
+                <!-- Photo 2: Architecture (Landscape - wide image) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[400px] md:h-[700px] lg:col-span-2">
-                    <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1600&q=80"
-                        alt="Sahara Desert"
+                    <img loading="lazy" decoding="async" src="https://i.ibb.co/DHdq3pw6/Architecture-photography.jpg"
+                        alt="Architecture Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
                     </div>
                     <div class="absolute bottom-8 left-8">
                         <span
-                            class="text-purple-500 font-bold uppercase tracking-wider text-sm mb-2 block">Landscape</span>
-                        <h3 class="text-2xl font-bold text-white">Golden Dunes</h3>
+                            class="text-purple-500 font-bold uppercase tracking-wider text-sm mb-2 block">Architecture</span>
+                        <h3 class="text-2xl font-bold text-white">Modern Lines</h3>
                     </div>
                 </div>
 
-                <!-- Photo 3: Product -->
+                <!-- Photo 3: Wedding (Landscape - wide image) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[400px] md:h-[500px] lg:col-span-2">
-                    <img src="https://images.unsplash.com/photo-1549488344-cbb6c34cf08b?auto=format&fit=crop&w=1600&q=80"
-                        alt="Moroccan Heritage"
+                    <img loading="lazy" decoding="async" src="https://i.ibb.co/CpD0CtsZ/weeding-boquet-large-width.jpg"
+                        alt="Wedding Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
                     </div>
                     <div class="absolute bottom-8 left-8">
                         <span
-                            class="text-yellow-400 font-bold uppercase tracking-wider text-sm mb-2 block">Heritage</span>
-                        <h3 class="text-2xl font-bold text-white">Artisan Lights</h3>
+                            class="text-violet-300 font-bold uppercase tracking-wider text-sm mb-2 block">Wedding</span>
+                        <h3 class="text-2xl font-bold text-white">Timeless Moments</h3>
                     </div>
                 </div>
 
-                <!-- Photo 4: Urban -->
+                <!-- Photo 4: Street (Landscape - wide image, displayed as portrait slot) -->
                 <div
                     class="group relative rounded-3xl overflow-hidden cursor-pointer h-[600px] md:h-[500px] lg:col-span-1">
-                    <img src="https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=800&q=80"
-                        alt="Chefchaouen"
+                    <img loading="lazy" decoding="async" src="https://i.ibb.co/bjnmVtB8/street-photography.jpg"
+                        alt="Street Photography"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
                     </div>
                     <div class="absolute bottom-8 left-8">
-                        <span class="text-purple-500 font-bold uppercase tracking-wider text-sm mb-2 block">City
-                            Life</span>
-                        <h3 class="text-2xl font-bold text-white">Blue Pearl</h3>
+                        <span class="text-purple-500 font-bold uppercase tracking-wider text-sm mb-2 block">Street</span>
+                        <h3 class="text-2xl font-bold text-white">Urban Stories</h3>
+                    </div>
+                </div>
+
+                <!-- Photo 5: Products (Landscape - wide image, full width) -->
+                <div
+                    class="group relative rounded-3xl overflow-hidden cursor-pointer h-[400px] md:h-[500px] lg:col-span-3">
+                    <img loading="lazy" decoding="async" src="https://i.ibb.co/qYBhLVJj/products-large.jpg"
+                        alt="Product Photography"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
+                    </div>
+                    <div class="absolute bottom-8 left-8">
+                        <span
+                            class="text-fuchsia-400 font-bold uppercase tracking-wider text-sm mb-2 block">Products</span>
+                        <h3 class="text-2xl font-bold text-white">Commercial Excellence</h3>
                     </div>
                 </div>
             </div>
@@ -788,7 +758,7 @@
                 <p class="text-purple-400 font-medium tracking-widest uppercase mb-4 text-sm reveal-text">Corporate
                     Solutions</p>
                 <h2 class="text-4xl md:text-6xl font-black text-white reveal-text">Premium <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-purple-500">Merchandise</span>
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-500">Merchandise</span>
                 </h2>
                 <p class="text-gray-400 max-w-2xl mx-auto mt-6 text-lg">Elevate your brand with high-quality printing
                     solutions. From custom apparel to office essentials, we bring your identity to the physical world.
@@ -800,7 +770,7 @@
                 <div
                     class="group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2">
                     <div class="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
-                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
+                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
                             alt="Apparel"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
@@ -818,22 +788,22 @@
 
                 <!-- Card 2: Drinkware -->
                 <div
-                    class="group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 hover:border-yellow-500/50 transition-all duration-500 hover:-translate-y-2">
+                    class="group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 hover:border-violet-500/50 transition-all duration-500 hover:-translate-y-2">
                     <div class="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
-                        <img src="https://images.unsplash.com/photo-1577937927133-66ef06acdf18?auto=format&fit=crop&w=800&q=80"
+                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1577937927133-66ef06acdf18?auto=format&fit=crop&w=800&q=80"
                             alt="Drinkware"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-yellow-400 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-violet-300 transition-colors">
                         Drinkware
                     </h3>
                     <p class="text-gray-400 mb-6">Mugs, Tumblers, and Bottles. High-quality ceramic and stainless steel
                         options for every desk.</p>
                     <ul class="text-sm text-gray-500 space-y-2">
                         <li class="flex items-center gap-2"><span
-                                class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Laser Engraving</li>
+                                class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>Laser Engraving</li>
                         <li class="flex items-center gap-2"><span
-                                class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>Full
+                                class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>Full
                             Color Sublimation</li>
                     </ul>
                 </div>
@@ -842,7 +812,7 @@
                 <div
                     class="group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-2">
                     <div class="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
-                        <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=800&q=80"
+                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=800&q=80"
                             alt="Stationery"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
@@ -884,11 +854,11 @@
                 </div>
                 <div class="relative z-10">
                     <h2 class="text-4xl md:text-6xl font-black mb-6">Let's Create <span
-                            class="text-yellow-400">Together</span></h2>
+                            class="text-violet-300">Together</span></h2>
                     <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto">Ready to transform your brand? We're here to
                         bring your vision to life with stunning designs and powerful websites.</p>
                     <a href="mailto:hello@creative.agency"
-                        class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-gray-900 rounded-full font-bold hover:shadow-lg hover:shadow-yellow-500/30 transition-all hover:-translate-y-1">
+                        class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500 to-fuchsia-400 text-gray-900 rounded-full font-bold hover:shadow-lg hover:shadow-yellow-500/30 transition-all hover:-translate-y-1">
                         Start Your Project
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -908,7 +878,7 @@
             <div class="grid md:grid-cols-4 gap-12 mb-16">
                 <div class="md:col-span-2">
                     <a href="#" class="text-3xl font-black tracking-tight mb-4 inline-block">CRÉATIVE<span
-                            class="text-yellow-400">.</span></a>
+                            class="text-violet-300">.</span></a>
                     <p class="text-gray-500 max-w-md">We craft exceptional digital experiences through stunning design
                         and innovative web development solutions.</p>
                 </div>

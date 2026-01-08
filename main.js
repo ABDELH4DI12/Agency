@@ -435,9 +435,11 @@ const designData = {
         { title: "Brand Identity 6", img: "https://i.pinimg.com/736x/87/4a/2d/874a2d78bd807b00fd8e2f9451210086.jpg" }
     ],
     social: [
-        { title: "Instagram Grid", img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" },
-        { title: "Story Templates", img: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=600&q=80" },
-        { title: "Ad Campaign", img: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?auto=format&fit=crop&w=600&q=80" }
+        { title: "Social Media 1", img: "https://i.pinimg.com/1200x/10/25/58/102558720890d383c580e7e96d377bf2.jpg" },
+        { title: "Social Media 2", img: "https://i.pinimg.com/736x/2d/2b/99/2d2b99c60c0a894ab362c447e7b71cbc.jpg" },
+        { title: "Social Media 3", img: "https://i.pinimg.com/736x/11/af/e1/11afe1b29272220b96b6971936e850e9.jpg" },
+        { title: "Pizza Promo", img: "https://samir-najm.vercel.app/assets/SOCIAL%20MEDIA/CONTENT/PIZZA.jpg" },
+        { title: "Product Promo", img: "https://samir-najm.vercel.app/assets/SOCIAL%20MEDIA/CONTENT/PRO%201.jpg" }
     ],
     printing: [
         { title: "Print Design 1", img: "https://i.pinimg.com/736x/b4/a6/49/b4a649619ff7ebb9bb0cb4af80b4d79a.jpg" },
@@ -483,9 +485,9 @@ if (modal) {
 
         // Populate Grid
         modalGrid.innerHTML = items.map((item, index) => `
-            <div class="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-900 translate-y-4 animate-fadeIn" style="animation-delay: ${index * 100}ms; animation-fill-mode: forwards;">
-                <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+            <div class="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-gray-900 translate-y-4 animate-fadeIn flex items-center justify-center" style="animation-delay: ${index * 100}ms; animation-fill-mode: forwards;">
+                <img src="${item.img}" alt="${item.title}" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 
             </div>
         `).join('');

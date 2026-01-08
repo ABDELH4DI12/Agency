@@ -30,8 +30,9 @@ html.lenis body {
 
 /* Hero Gradient */
 .hero-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.3), transparent),
-        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(234, 179, 8, 0.1), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(147, 51, 234, 0.35), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(192, 132, 252, 0.15), transparent),
+        radial-gradient(ellipse 50% 30% at 20% 80%, rgba(126, 34, 206, 0.2), transparent);
 }
 
 /* Floating Shapes */
@@ -134,7 +135,7 @@ html.lenis body {
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #8B5CF6, #EAB308);
+    background: linear-gradient(90deg, #9333EA, #C084FC);
     transition: width 0.3s ease;
 }
 
@@ -212,7 +213,11 @@ html.lenis body {
 }
 
 .project-card:hover img {
-    transform: scale(1.1);
+    transform: scale(1.05);
+}
+
+.project-card img {
+    object-fit: contain !important;
 }
 
 /* Stats Animation */
@@ -395,4 +400,22 @@ html.lenis body {
 
 .animate-pulse-slow {
     animation: pulse-slow 8s ease-in-out infinite;
+}
+
+
+/* Image loading optimization */
+img {
+    background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+img[src] {
+    animation: none;
+    background: transparent;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
