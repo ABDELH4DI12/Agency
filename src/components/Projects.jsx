@@ -1,42 +1,38 @@
-import { useRef } from 'react';
+/* eslint-disable react/prop-types */
+import { useMemo, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-function Projects() {
+const PROJECT_COLOR_CYCLE = ['amber', 'orange', 'purple'];
+
+function parseTags(tags) {
+  return String(tags || '')
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+function Projects({ websites = [], isLoading = false, error = '' }) {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const projects = useMemo(
+    () =>
+      websites.map((website, index) => {
+        const tags = parseTags(website.headTags || website.footTags);
 
-  const projects = [
-    {
-      title: "Artisan Coffee",
-      category: "E-commerce",
-      description: "Premium coffee shop with online ordering, product showcase, and customer testimonials.",
-      image: "https://i.ibb.co/KzpCcKQG/Screenshot-from-2026-01-08-00-53-14.png",
-      tags: ["HTML/CSS", "JavaScript"],
-      categoryColor: "amber",
-      reverse: false,
-      link: "https://artisan-coffee-three.vercel.app/"
-    },
-    {
-      title: "Savory Kitchen",
-      category: "Restaurant",
-      description: "Premium dining platform with menu showcase, online ordering, and admin dashboard.",
-      image: "https://i.ibb.co/dw8SNSpk/Screenshot-from-2026-01-08-00-54-54.png",
-      tags: ["React", "Node.js"],
-      categoryColor: "orange",
-      reverse: true,
-      link: "https://savorykitchen.vercel.app/"
-    },
-    {
-      title: "LUXE Motors",
-      category: "Automotive",
-      description: "Luxury electric vehicle showcase with performance specs, gallery, and configurator.",
-      image: "https://i.ibb.co/FqfCdLmp/Screenshot-from-2026-01-08-00-55-59.png",
-      tags: ["Next.js", "GSAP"],
-      categoryColor: "purple",
-      reverse: false,
-      link: "https://cars-eta-six.vercel.app/"
-    }
-  ];
+        return {
+          id: website.id,
+          title: website.title || `Website #${website.id}`,
+          category: tags[0] || 'Website',
+          description: website.description || '',
+          image: website.imageUrl || '',
+          tags: tags.slice(1),
+          categoryColor: PROJECT_COLOR_CYCLE[index % PROJECT_COLOR_CYCLE.length],
+          reverse: index % 2 === 1,
+          link: website.websiteUrl || '#contact',
+        };
+      }),
+    [websites]
+  );
 
   const getCategoryColorClasses = (color) => {
     const colors = {
@@ -75,9 +71,29 @@ function Projects() {
 
         {/* Projects Grid */}
         <div className="space-y-16">
+          {isLoading && projects.length === 0 && (
+            <div className="grid gap-6 md:grid-cols-3">
+              {[0, 1, 2].map((item) => (
+                <div key={item} className="h-72 animate-pulse rounded-2xl border border-white/10 bg-white/5" />
+              ))}
+            </div>
+          )}
+
+          {!isLoading && error && projects.length === 0 && (
+            <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-6 py-5 text-center text-sm font-semibold text-red-200">
+              {error}
+            </div>
+          )}
+
+          {!isLoading && !error && projects.length === 0 && (
+            <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-sm font-semibold text-gray-400">
+              No website projects are available yet.
+            </div>
+          )}
+
           {projects.map((project, index) => (
             <motion.div 
-              key={index}
+              key={project.id || index}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
               variants={fadeInUp}
@@ -86,17 +102,24 @@ function Projects() {
             >
               <motion.a
                 href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={project.link.startsWith('http') ? '_blank' : undefined}
+                rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
                 className={`relative rounded-2xl overflow-hidden border border-white/10 bg-gray-900/50 ${project.reverse ? 'md:order-2' : ''} block`}
               >
-                <img 
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-auto"
-                />
+                {project.image ? (
+                  <img 
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-auto"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                  />
+                ) : (
+                  <div className="flex aspect-video items-center justify-center bg-white/5 text-sm font-semibold text-gray-500">
+                    {project.title}
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -129,8 +152,8 @@ function Projects() {
                 </div>
                 <motion.a
                   href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={project.link.startsWith('http') ? '_blank' : undefined}
+                  rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                   whileHover={{ scale: 1.05, x: 5 }}
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-semibold transition-colors mt-4"

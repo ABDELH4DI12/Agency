@@ -1,95 +1,39 @@
-import { useRef, useState } from 'react';
+/* eslint-disable react/prop-types */
+import { useMemo, useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 
-function Designs() {
+const COLLECTION_COL_SPANS = ['lg:col-span-3', 'lg:col-span-3', 'lg:col-span-2', 'lg:col-span-2', 'lg:col-span-2'];
+const COLLECTION_COLORS = ['purple', 'pink', 'blue', 'cyan', 'orange'];
+
+function parseTags(tags) {
+  return String(tags || '')
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+function Designs({ collections = [], isLoading = false, error = '' }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const categories = useMemo(
+    () =>
+      collections.map((collection, index) => {
+        const tags = parseTags(collection.tags);
 
-  const categories = [
-    {
-      id: "posters",
-      title: "Posters",
-      subtitle: "Event, Movie & Promotional",
-      number: "01",
-      color: "purple",
-      colSpan: "lg:col-span-3"
-    },
-    {
-      id: "branding",
-      title: "Branding",
-      subtitle: "Logos, Business Cards, Identity Systems & Guidelines",
-      number: "02",
-      color: "pink",
-      colSpan: "lg:col-span-3"
-    },
-    {
-      id: "social",
-      title: "Social",
-      subtitle: "Posts, Stories & Ads",
-      number: "03",
-      color: "blue",
-      colSpan: "lg:col-span-2"
-    },
-    {
-      id: "printing",
-      title: "Printing",
-      subtitle: "Brochures & Flyers",
-      number: "04",
-      color: "cyan",
-      colSpan: "lg:col-span-2"
-    },
-    {
-      id: "interior",
-      title: "Interior",
-      subtitle: "Spaces, Layouts & Decor",
-      number: "05",
-      color: "orange",
-      colSpan: "lg:col-span-2"
-    }
-  ];
-
-  const designData = {
-    posters: [
-      { title: "Poster Design 1", img: "https://i.pinimg.com/1200x/77/18/1a/77181a8f58fba00efb064ccd23971791.jpg" },
-      { title: "Poster Design 2", img: "https://i.pinimg.com/1200x/8a/9c/3d/8a9c3dbdfc712770c6c2e5e5fdc24da4.jpg" },
-      { title: "Poster Design 3", img: "https://i.pinimg.com/736x/71/20/02/71200295ac2c453d82b01680f8e2c8d0.jpg" },
-      { title: "Poster Design 4", img: "https://i.pinimg.com/1200x/e6/aa/99/e6aa9902bf7e0a3fa1a1ed03c2e3eaad.jpg" },
-      { title: "Event Flyer", img: "https://samir-najm.vercel.app/assets/FLAYERS/CONTENT/IMG_20250910_185424.jpg" },
-      { title: "Poster Design 6", img: "https://i.pinimg.com/736x/57/db/4a/57db4a8ea4d11326a38f7d3c3330509f.jpg" }
-    ],
-    branding: [
-      { title: "Brand Identity 1", img: "https://i.pinimg.com/736x/ef/6c/a4/ef6ca4bcdea3c50458f691a15b1eeb20.jpg" },
-      { title: "Brand Identity 2", img: "https://i.pinimg.com/736x/ba/cb/c2/bacbc2dc95021c900eb1a09232f1ff12.jpg" },
-      { title: "Brand Identity 3", img: "https://i.pinimg.com/736x/e7/f8/0a/e7f80a798f895860c88ee2c8812f9a90.jpg" },
-      { title: "Brand Identity 4", img: "https://i.pinimg.com/1200x/4e/df/b6/4edfb68555334ef0d8e7110242fc5198.jpg" },
-      { title: "Brand Identity 5", img: "https://i.pinimg.com/736x/85/df/b0/85dfb0839748d8fedc1687e6572ce7b4.jpg" },
-      { title: "Brand Identity 6", img: "https://i.pinimg.com/736x/87/4a/2d/874a2d78bd807b00fd8e2f9451210086.jpg" }
-    ],
-    social: [
-      { title: "Social Media 1", img: "https://i.pinimg.com/1200x/10/25/58/102558720890d383c580e7e96d377bf2.jpg" },
-      { title: "Social Media 2", img: "https://i.pinimg.com/736x/2d/2b/99/2d2b99c60c0a894ab362c447e7b71cbc.jpg" },
-      { title: "Social Media 3", img: "https://i.pinimg.com/736x/11/af/e1/11afe1b29272220b96b6971936e850e9.jpg" },
-      { title: "Pizza Promo", img: "https://samir-najm.vercel.app/assets/SOCIAL%20MEDIA/CONTENT/PIZZA.jpg" },
-      { title: "Product Promo", img: "https://samir-najm.vercel.app/assets/SOCIAL%20MEDIA/CONTENT/PRO%201.jpg" }
-    ],
-    printing: [
-      { title: "Print Design 1", img: "https://i.pinimg.com/736x/b4/a6/49/b4a649619ff7ebb9bb0cb4af80b4d79a.jpg" },
-      { title: "Print Design 2", img: "https://i.pinimg.com/1200x/38/37/af/3837afdb5e7d997be095c0366b8dd2ba.jpg" },
-      { title: "Print Design 3", img: "https://i.pinimg.com/736x/20/fd/f2/20fdf294e2305e38cc14487485bb73e0.jpg" },
-      { title: "Print Design 4", img: "https://i.pinimg.com/736x/93/0c/28/930c2801321c181718d5a0dcafd5f72f.jpg" },
-      { title: "Print Design 5", img: "https://i.pinimg.com/1200x/5d/b9/f1/5db9f13144d16273565e7564f7be1c52.jpg" },
-      { title: "Print Design 6", img: "https://i.pinimg.com/1200x/20/0b/e6/200be6765b9b8bb067325bb4dce0bed5.jpg" }
-    ],
-    interior: [
-      { title: "Decor 1", img: "/backup/mlayr/decoration interieur/DECOR 1.jpeg" },
-      { title: "Decor 2", img: "/backup/mlayr/decoration interieur/DECOR 2.jpeg" },
-      { title: "Decor 3", img: "/backup/mlayr/decoration interieur/DECOR 3.jpeg" },
-      { title: "Decor 4", img: "/backup/mlayr/decoration interieur/DECOR 4.jpeg" },
-      { title: "Decor 5", img: "/backup/mlayr/decoration interieur/DECOR 5.jpeg" },
-      { title: "Decor 6", img: "/backup/mlayr/decoration interieur/DECOR 6.jpeg" }
-    ]
-  };
+        return {
+          id: String(collection.id),
+          title: collection.title || `Collection #${collection.id}`,
+          subtitle: tags.length ? tags.slice(0, 4).join(' / ') : `${collection.images?.length || 0} images`,
+          number: String(index + 1).padStart(2, '0'),
+          color: COLLECTION_COLORS[index % COLLECTION_COLORS.length],
+          colSpan: COLLECTION_COL_SPANS[index % COLLECTION_COL_SPANS.length],
+          images: (collection.images || []).filter((image) => image.imageUrl),
+        };
+      }),
+    [collections]
+  );
+  const selectedCollection = categories.find((category) => category.id === selectedCategory);
 
   const getColorClasses = (color) => {
     const colors = {
@@ -167,7 +111,31 @@ function Designs() {
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
+          {isLoading && categories.length === 0 && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
+              {[0, 1, 2, 3, 4].map((item) => (
+                <div
+                  key={item}
+                  className={`h-[320px] animate-pulse rounded-3xl border border-white/10 bg-white/5 ${COLLECTION_COL_SPANS[item % COLLECTION_COL_SPANS.length]}`}
+                />
+              ))}
+            </div>
+          )}
+
+          {!isLoading && error && categories.length === 0 && (
+            <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-6 py-5 text-center text-sm font-semibold text-red-200">
+              {error}
+            </div>
+          )}
+
+          {!isLoading && !error && categories.length === 0 && (
+            <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-sm font-semibold text-gray-400">
+              No collections are available yet.
+            </div>
+          )}
+
+          {categories.length > 0 && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
             {categories.map((category, index) => {
               const colorClasses = getColorClasses(category.color);
               return (
@@ -210,13 +178,14 @@ function Designs() {
                 </motion.div>
               );
             })}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Modal */}
       <AnimatePresence>
-        {selectedCategory && (
+        {selectedCollection && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -243,7 +212,7 @@ function Designs() {
                     Category Gallery
                   </span>
                   <h2 className="text-4xl md:text-6xl font-black text-white capitalize">
-                    {selectedCategory}
+                    {selectedCollection.title}
                   </h2>
                 </div>
                 <motion.button
@@ -263,9 +232,9 @@ function Designs() {
                 </motion.button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {designData[selectedCategory]?.map((item, index) => (
+                {selectedCollection.images.map((item, index) => (
                   <motion.div 
-                    key={index}
+                    key={item.id || index}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
@@ -273,14 +242,20 @@ function Designs() {
                     className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-gray-900 flex items-center justify-center"
                   >
                     <img 
-                      src={item.img} 
-                      alt={item.title}
+                      src={item.imageUrl} 
+                      alt={`${selectedCollection.title} ${index + 1}`}
+                      loading={index < 3 ? 'eager' : 'lazy'}
                       className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   </motion.div>
                 ))}
               </div>
+              {selectedCollection.images.length === 0 && (
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-sm font-semibold text-gray-400">
+                  No images are available yet.
+                </div>
+              )}
             </motion.div>
           </motion.div>
         )}

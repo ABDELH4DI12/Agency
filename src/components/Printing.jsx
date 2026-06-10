@@ -1,33 +1,31 @@
-import { useRef } from 'react';
+/* eslint-disable react/prop-types */
+import { useMemo, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-function Printing() {
+const PRODUCT_COLORS = ['purple', 'violet', 'cyan'];
+
+function parseTags(tags) {
+  return String(tags || '')
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+function Printing({ items = [], isLoading = false, error = '' }) {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-
-  const products = [
-    {
-      title: "Custom Apparel",
-      description: "Hoodies, T-shirts, and Caps. Premium cotton blends with durable prints that survive the wash.",
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
-      features: ["Screen Printing", "Embroidery"],
-      color: "purple"
-    },
-    {
-      title: "Drinkware",
-      description: "Mugs, Tumblers, and Bottles. High-quality ceramic and stainless steel options for every desk.",
-      image: "https://images.unsplash.com/photo-1577937927133-66ef06acdf18?auto=format&fit=crop&w=800&q=80",
-      features: ["Laser Engraving", "Full Color Sublimation"],
-      color: "violet"
-    },
-    {
-      title: "Office Essentials",
-      description: "Notebooks, Pens, and Business Cards. Make a lasting first impression with premium stationery.",
-      image: "https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=800&q=80",
-      features: ["Gold Foil", "Soft Touch Finish"],
-      color: "cyan"
-    }
-  ];
+  const products = useMemo(
+    () =>
+      items.map((item, index) => ({
+        id: item.id,
+        title: item.title || `Merchandise #${item.id}`,
+        description: item.description || '',
+        image: item.imageUrl || '',
+        features: parseTags(item.tags),
+        color: PRODUCT_COLORS[index % PRODUCT_COLORS.length],
+      })),
+    [items]
+  );
 
   const getColorClasses = (color) => {
     const colors = {
@@ -78,10 +76,31 @@ function Printing() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {isLoading && products.length === 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[0, 1, 2].map((item) => (
+              <div key={item} className="h-96 animate-pulse rounded-3xl border border-white/10 bg-white/5" />
+            ))}
+          </div>
+        )}
+
+        {!isLoading && error && products.length === 0 && (
+          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-6 py-5 text-center text-sm font-semibold text-red-200">
+            {error}
+          </div>
+        )}
+
+        {!isLoading && !error && products.length === 0 && (
+          <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-sm font-semibold text-gray-400">
+            No merchandise is available yet.
+          </div>
+        )}
+
+        {products.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {products.map((product, index) => (
             <motion.div
-              key={index}
+              key={product.id || index}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
               variants={fadeInUp}
@@ -90,11 +109,18 @@ function Printing() {
               className={`group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 ${getColorClasses(product.color).split(' ')[0]} transition-all duration-500`}
             >
               <div className="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
-                <img 
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
+                {product.image ? (
+                  <img 
+                    src={product.image}
+                    alt={product.title}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-sm font-semibold text-gray-500">
+                    {product.title}
+                  </div>
+                )}
               </div>
               <h3 className={`text-2xl font-bold text-white mb-4 ${getColorClasses(product.color).split(' ')[1]} transition-colors`}>
                 {product.title}
@@ -110,7 +136,8 @@ function Printing() {
               </ul>
             </motion.div>
           ))}
-        </div>
+          </div>
+        )}
 
         <motion.div 
           initial="hidden"
