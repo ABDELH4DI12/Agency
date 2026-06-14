@@ -1,4 +1,5 @@
 import { createRow, deleteRow, getTableConfigs, listRows, updateRow } from '../server/supabase.js'
+import { requireAdmin } from '../server/adminAuth.js'
 
 function sendJson(res, statusCode, payload) {
   res.status(statusCode).json(payload)
@@ -22,6 +23,8 @@ function getQueryValue(value) {
 
 export default async function handler(req, res) {
   try {
+    requireAdmin(req)
+
     if (req.method === 'GET' && req.query?.meta === 'tables') {
       sendJson(res, 200, { tables: getTableConfigs() })
       return

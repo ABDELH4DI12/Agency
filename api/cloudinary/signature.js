@@ -1,4 +1,5 @@
 import { createSignaturePayload } from '../../server/cloudinary.js'
+import { requireAdmin } from '../../server/adminAuth.js'
 
 function sendJson(res, statusCode, payload) {
   res.status(statusCode).json(payload)
@@ -11,6 +12,7 @@ export default function handler(req, res) {
   }
 
   try {
+    requireAdmin(req)
     const payload = createSignaturePayload()
 
     sendJson(res, 200, payload)

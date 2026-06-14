@@ -1,5 +1,7 @@
 /* eslint-env node */
 
+import crypto from 'node:crypto'
+
 export const TABLE_CONFIGS = {
   websites: {
     name: 'websites',
@@ -275,4 +277,29 @@ export async function updateWebsite(options = {}) {
 
 export async function deleteWebsite(options = {}) {
   return deleteRow({ ...options, table: 'websites' })
+}
+
+export async function verifyAdminPassword({ env = process.env, password = '' } = {}) {
+  if (typeof password !== 'string' || !password) {
+    return false
+  }
+
+  const { restUrl, supabaseKey } = getSupabaseConfig(env)
+  const query = new URLSearchParams({
+    select: 'pwd',
+    limit: '100',
+  })
+  const response = await globalThis.fetch(`${restUrl}/password?${query.toString()}`, {
+    headers: getHeaders(supabaseKey),
+  })
+  const rows = await readSupabaseResponse(response, 'Unable to verify admin password.')
+  const submittedDigest = crypto.createHash('sha256').update(password).digest()
+  let matches = false
+
+  for (const row of rows || []) {
+    const storedDigest = crypto.createHash('sha256').update(String(row.pwd || '')).digest()
+    matches = crypto.timingSafeEqual(submittedDigest, storedDigest) || matches
+  }
+
+  return matches
 }

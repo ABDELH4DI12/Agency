@@ -1,4 +1,5 @@
 import { createWebsite, deleteWebsite, listWebsites, updateWebsite } from '../server/supabase.js'
+import { requireAdmin } from '../server/adminAuth.js'
 
 function sendJson(res, statusCode, payload) {
   res.status(statusCode).json(payload)
@@ -22,6 +23,8 @@ function getQueryValue(value) {
 
 export default async function handler(req, res) {
   try {
+    requireAdmin(req)
+
     if (req.method === 'GET') {
       sendJson(res, 200, { websites: await listWebsites() })
       return

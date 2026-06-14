@@ -10,6 +10,7 @@ import Automation from './components/Automation'
 import Printing from './components/Printing'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import WhatsAppBubble from './components/WhatsAppBubble'
 import AdminPanel from './components/AdminPanel'
 
 const EMPTY_CONTENT = {
@@ -120,6 +121,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <WhatsAppBubble />
     </div>
   )
 }
