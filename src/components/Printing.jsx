@@ -19,6 +19,7 @@ function Printing({ items = [], isLoading = false, error = '' }) {
     image: item.imageUrl || '',
     features: parseTags(item.tags),
     color: index % 3 === 0 ? 'bg-lilac' : index % 3 === 1 ? 'bg-sage' : 'bg-butter',
+    isDark: index % 3 === 0,
   })), [items])
 
   return (
@@ -51,7 +52,7 @@ function Printing({ items = [], isLoading = false, error = '' }) {
           {!isLoading && products.length > 0 && (
             <div className="grid gap-6 md:grid-cols-3">
               {products.map((product, index) => (
-                <motion.article key={product.id} whileHover={{ y: -8, rotate: 0 }} className={`relative overflow-hidden rounded-[2rem] border-2 border-ink p-4 shadow-[7px_7px_0_#241B2F] ${product.color} ${index % 2 ? 'rotate-1' : '-rotate-1'}`}>
+                <motion.article key={product.id} whileHover={{ y: -8, rotate: 0 }} className={`relative overflow-hidden rounded-[2rem] border-2 border-ink p-4 shadow-[7px_7px_0_#241B45] ${product.color} ${product.isDark ? 'text-paper' : 'text-ink'} ${index % 2 ? 'rotate-1' : '-rotate-1'}`}>
                   <span className="paper-tape left-1/2 top-0 -translate-x-1/2 -translate-y-1/3" />
                   <AsyncImage
                     src={product.image}
@@ -62,9 +63,9 @@ function Printing({ items = [], isLoading = false, error = '' }) {
                   />
                   <div className="px-2 pb-3 pt-5">
                     <h3 className="display-type text-3xl font-extrabold tracking-[-0.05em]">{product.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-ink/65">{product.description}</p>
+                    <p className={`mt-3 text-sm leading-6 ${product.isDark ? 'text-paper/75' : 'text-ink/65'}`}>{product.description}</p>
                     <div className="mt-5 flex flex-wrap gap-2">
-                      {product.features.map((feature) => <span key={feature} className="rounded-full border border-ink/25 bg-paper/60 px-3 py-1 text-xs font-semibold">{feature}</span>)}
+                      {product.features.map((feature) => <span key={feature} className="rounded-full border border-ink/25 bg-paper/75 px-3 py-1 text-xs font-semibold text-ink">{feature}</span>)}
                     </div>
                   </div>
                 </motion.article>

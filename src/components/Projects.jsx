@@ -5,7 +5,7 @@ import AsyncImage from './AsyncImage'
 import SectionHeading from './SectionHeading'
 import { revealUp } from '../lib/motion'
 
-const ACCENTS = ['bg-lilac', 'bg-sage', 'bg-butter']
+const ACCENTS = ['bg-sage', 'bg-butter', 'bg-paper']
 
 function parseTags(tags) {
   return String(tags || '').split(',').map((tag) => tag.trim()).filter(Boolean)
@@ -87,7 +87,7 @@ function Projects({ websites = [], isLoading = false, error = '' }) {
                   <motion.article
                     key={project.id || index}
                     whileHover={{ y: -5, rotate: 0 }}
-                    className={`group relative overflow-hidden rounded-[2rem] border-2 border-ink p-4 shadow-[7px_7px_0_#241B2F] ${project.accent} ${
+                    className={`group relative overflow-hidden rounded-[2rem] border-2 border-ink p-4 shadow-[7px_7px_0_#241B45] ${project.accent} ${
                       isFeatured ? 'lg:col-span-7 lg:row-span-2' : 'lg:col-span-5'
                     } ${index === 1 ? 'lg:rotate-1' : index === 2 ? 'lg:-rotate-1' : ''}`}
                   >

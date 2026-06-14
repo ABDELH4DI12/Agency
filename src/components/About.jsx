@@ -14,6 +14,7 @@ const NOTES = [
     title: 'One connected world',
     text: 'Brand, web, motion, and automation should feel related, not stitched together.',
     color: 'bg-lilac',
+    textColor: 'text-paper',
     rotate: 'rotate-2',
   },
   {
@@ -100,14 +101,14 @@ function About() {
               <motion.article
                 key={note.title}
                 whileHover={{ y: -6, rotate: 0 }}
-                className={`relative min-h-64 rounded-[1.5rem] border-2 border-ink p-6 shadow-[6px_6px_0_#241B2F] ${note.color} ${note.rotate} ${
+                className={`relative min-h-64 rounded-[1.5rem] border-2 border-ink p-6 shadow-[6px_6px_0_#241B45] ${note.color} ${note.textColor || 'text-ink'} ${note.rotate} ${
                   index === 2 ? 'sm:col-span-2 sm:min-h-52' : ''
                 }`}
               >
                 <span className="font-mono text-xs">0{index + 1}</span>
                 <div className="mt-14">
                   <h3 className="display-type text-2xl font-bold tracking-[-0.04em] md:text-3xl">{note.title}</h3>
-                  <p className="mt-3 max-w-lg leading-7 text-ink/70">{note.text}</p>
+                  <p className={`mt-3 max-w-lg leading-7 ${note.textColor ? 'text-paper/75' : 'text-ink/70'}`}>{note.text}</p>
                 </div>
               </motion.article>
             ))}

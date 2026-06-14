@@ -41,8 +41,8 @@ function Automation() {
             <motion.article
               key={number}
               whileHover={{ y: -7, rotate: 0 }}
-              className={`rounded-[2rem] border-2 border-ink p-7 shadow-[7px_7px_0_#241B2F] ${
-                index === 0 ? 'bg-sage -rotate-1' : index === 1 ? 'bg-lilac rotate-1' : 'bg-butter -rotate-1'
+              className={`rounded-[2rem] border-2 border-ink p-7 shadow-[7px_7px_0_#241B45] ${
+                index === 0 ? 'bg-sage -rotate-1' : index === 1 ? 'bg-lilac text-paper rotate-1' : 'bg-butter -rotate-1'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -52,10 +52,10 @@ function Automation() {
                 </div>
               </div>
               <h3 className="display-type mt-14 text-3xl font-extrabold tracking-[-0.05em]">{title}</h3>
-              <p className="mt-4 min-h-20 leading-7 text-ink/65">{description}</p>
-              <ul className="mt-7 border-t-2 border-ink/20">
+              <p className={`mt-4 min-h-20 leading-7 ${index === 1 ? 'text-paper/75' : 'text-ink/65'}`}>{description}</p>
+              <ul className={`mt-7 border-t-2 ${index === 1 ? 'border-paper/25' : 'border-ink/20'}`}>
                 {features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3 border-b-2 border-ink/15 py-3 text-sm font-semibold">
+                  <li key={feature} className={`flex items-center gap-3 border-b-2 py-3 text-sm font-semibold ${index === 1 ? 'border-paper/20' : 'border-ink/15'}`}>
                     <span className="size-2 rounded-full bg-coral" />
                     {feature}
                   </li>

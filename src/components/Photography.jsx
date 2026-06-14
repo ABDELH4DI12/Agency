@@ -31,7 +31,7 @@ function Photography() {
             <motion.figure
               key={title}
               whileHover={{ y: -7, rotate: 0 }}
-              className={`group relative overflow-hidden rounded-[1.75rem] border-2 border-ink bg-paper p-3 shadow-[7px_7px_0_#241B2F] ${span} ${rotation}`}
+              className={`group relative overflow-hidden rounded-[1.75rem] border-2 border-ink bg-paper p-3 shadow-[7px_7px_0_#241B45] ${span} ${rotation}`}
             >
               <div className="relative h-full overflow-hidden rounded-[1.25rem]">
                 <img src={image} alt={title} loading={index < 2 ? 'eager' : 'lazy'} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />

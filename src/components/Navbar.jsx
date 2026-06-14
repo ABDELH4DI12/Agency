@@ -22,7 +22,7 @@ function Navbar() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-5">
-        <nav className="mx-auto flex w-full max-w-[82rem] items-center justify-between rounded-[1.4rem] border-2 border-ink bg-paper px-4 py-3 shadow-[5px_5px_0_#241B2F]">
+        <nav className="mx-auto flex w-full max-w-[82rem] items-center justify-between rounded-[1.4rem] border-2 border-ink bg-paper px-4 py-3 shadow-[5px_5px_0_#241B45]">
           <a href="#home" className="flex items-center gap-3" aria-label="Creative Horizons home">
             <img src="/logo.png" alt="" className="h-9 w-auto" />
             <span className="hidden font-display text-sm font-extrabold tracking-[-0.025em] text-ink sm:block">
@@ -73,7 +73,7 @@ function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-lilac px-5 pb-8 pt-28 lg:hidden"
+            className="fixed inset-0 z-40 bg-lilac px-5 pb-8 pt-28 text-paper lg:hidden"
           >
             <nav className="mx-auto flex h-full max-w-xl flex-col justify-between">
               <div>
@@ -82,14 +82,14 @@ function Navbar() {
                     key={href}
                     href={href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center justify-between border-b-2 border-ink/25 py-5"
+                    className="flex items-center justify-between border-b-2 border-paper/30 py-5"
                   >
                     <span className="font-display text-4xl font-bold tracking-[-0.05em]">{label}</span>
                     <span className="font-mono text-xs">0{index + 1}</span>
                   </a>
                 ))}
               </div>
-              <div className="craft-card flex items-center justify-between p-4 text-sm font-semibold">
+              <div className="craft-card flex items-center justify-between p-4 text-sm font-semibold text-ink">
                 <span>Based in Morocco</span>
                 <span className="flex items-center gap-2">
                   <span className="size-2.5 rounded-full bg-coral" />

@@ -7,6 +7,7 @@ const STUDIO_CARDS = [
     title: 'Identity systems',
     label: 'Brand',
     color: 'bg-lilac',
+    textColor: 'text-paper',
     position: 'left-[7%] top-[2%] rotate-[-7deg]',
     tape: 'left-1/2 -translate-x-1/2 -translate-y-1/2',
     visual: 'identity',
@@ -51,7 +52,7 @@ function Hero() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
               href="#projects"
-              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-ink bg-ink px-6 py-3 text-sm font-bold text-paper shadow-[4px_4px_0_#FF7657] transition hover:-translate-y-1"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-ink bg-ink px-6 py-3 text-sm font-bold text-paper shadow-[4px_4px_0_#FFD700] transition hover:-translate-y-1"
             >
               See what we make
               <span className="ml-3">↓</span>
@@ -83,7 +84,7 @@ function Hero() {
           {STUDIO_CARDS.map((card) => (
             <div
               key={card.title}
-              className={`absolute rounded-[2rem] border-2 border-ink p-3 shadow-[9px_9px_0_#241B2F] ${card.color} ${card.position}`}
+              className={`absolute rounded-[2rem] border-2 border-ink p-3 shadow-[9px_9px_0_#241B45] ${card.color} ${card.textColor || 'text-ink'} ${card.position}`}
             >
               <span className={`paper-tape top-0 ${card.tape}`} />
               <StudioCard {...card} />
@@ -150,7 +151,7 @@ function StudioCard({ title, label, visual }) {
       </div>
       <div className="flex items-center justify-between px-2 pb-1 pt-3">
         <span className="max-w-[10rem] truncate text-sm font-bold">{title}</span>
-        <span className="rounded-full border border-ink/30 px-2 py-1 font-mono text-[0.58rem] uppercase">{label}</span>
+        <span className="rounded-full border border-current/30 px-2 py-1 font-mono text-[0.58rem] uppercase">{label}</span>
       </div>
     </div>
   )

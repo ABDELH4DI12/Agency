@@ -8,15 +8,15 @@
   color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --ink: #241b2f;
-  --cream: #f7f0e6;
-  --paper: #fffdf8;
-  --coral: #ff7657;
-  --sage: #a9be9b;
-  --butter: #f2d06b;
-  --lilac: #c9b7ee;
-  --smoke: #6d6473;
-  --line: rgba(36, 27, 47, 0.17);
+  --ink: #241b45;
+  --cream: #e6e6fa;
+  --paper: #fcfbff;
+  --coral: #ffd700;
+  --sage: #a67cba;
+  --butter: #f0e68c;
+  --lilac: #6a5acd;
+  --smoke: #625c78;
+  --line: rgba(36, 27, 69, 0.18);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -90,8 +90,8 @@ select:focus-visible {
   position: relative;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 5% 12%, rgba(201, 183, 238, 0.34), transparent 22rem),
-    radial-gradient(circle at 95% 35%, rgba(169, 190, 155, 0.26), transparent 25rem),
+    radial-gradient(circle at 5% 12%, rgba(166, 124, 186, 0.28), transparent 22rem),
+    radial-gradient(circle at 95% 35%, rgba(240, 230, 140, 0.28), transparent 25rem),
     var(--cream);
   color: var(--ink);
   font-family: 'Manrope', sans-serif;
@@ -102,8 +102,8 @@ select:focus-visible {
   z-index: 100;
   inset: 0;
   background-image:
-    linear-gradient(rgba(36, 27, 47, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(36, 27, 47, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(36, 27, 69, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 27, 69, 0.03) 1px, transparent 1px);
   background-size: 28px 28px;
   content: '';
   pointer-events: none;
@@ -158,7 +158,7 @@ select:focus-visible {
   border: 1.5px solid var(--line);
   border-radius: 1.75rem;
   background: rgba(255, 253, 248, 0.9);
-  box-shadow: 0 18px 45px rgba(60, 42, 67, 0.08);
+  box-shadow: 0 18px 45px rgba(63, 49, 113, 0.1);
 }
 
 .paper-tape {
@@ -166,8 +166,8 @@ select:focus-visible {
   z-index: 2;
   width: 5rem;
   height: 1.45rem;
-  background: rgba(242, 208, 107, 0.82);
-  box-shadow: 0 2px 8px rgba(36, 27, 47, 0.08);
+  background: rgba(240, 230, 140, 0.86);
+  box-shadow: 0 2px 8px rgba(36, 27, 69, 0.1);
   transform: rotate(-5deg);
 }
 

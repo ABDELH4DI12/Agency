@@ -9,7 +9,7 @@ function Contact() {
   return (
     <section id="contact" ref={sectionRef} className="section-shell section-rule">
       <motion.div initial="hidden" animate={isInView ? 'visible' : 'hidden'} variants={revealUp} className="section-inner">
-        <div className="relative overflow-hidden rounded-[2.5rem] border-2 border-ink bg-coral p-7 shadow-[10px_10px_0_#241B2F] md:p-12 lg:p-16">
+        <div className="relative overflow-hidden rounded-[2.5rem] border-2 border-ink bg-coral p-7 shadow-[10px_10px_0_#241B45] md:p-12 lg:p-16">
           <span className="paper-tape left-20 top-0 -translate-y-1/2" />
           <div className="absolute -right-20 -top-20 size-72 rounded-full border-2 border-ink/15" />
           <div className="absolute -right-5 top-10 size-44 rounded-full border-2 border-ink/15" />

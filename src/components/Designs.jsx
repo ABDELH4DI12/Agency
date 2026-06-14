@@ -27,6 +27,7 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
           images,
           cover: images[0]?.imageUrl || '',
           color: COLORS[index % COLORS.length],
+          isDark: index % COLORS.length === 1,
           rotation: ROTATIONS[index % ROTATIONS.length],
         }
       }),
@@ -83,7 +84,7 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
                     type="button"
                     whileHover={{ y: -8, rotate: 0 }}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`group relative min-h-[25rem] overflow-hidden rounded-[2rem] border-2 border-ink p-4 text-left shadow-[7px_7px_0_#241B2F] ${category.color} ${category.rotation}`}
+                    className={`group relative min-h-[25rem] overflow-hidden rounded-[2rem] border-2 border-ink p-4 text-left shadow-[7px_7px_0_#241B45] ${category.color} ${category.isDark ? 'text-paper' : 'text-ink'} ${category.rotation}`}
                   >
                     <span className="paper-tape left-1/2 top-0 -translate-x-1/2 -translate-y-1/3" />
                     <AsyncImage
@@ -95,11 +96,11 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
                     />
                     <div className="flex items-start justify-between gap-4 px-2 pb-2 pt-5">
                       <div>
-                        <span className="font-mono text-xs text-ink/55">/{String(index + 1).padStart(2, '0')}</span>
+                        <span className={`font-mono text-xs ${category.isDark ? 'text-paper/65' : 'text-ink/55'}`}>/{String(index + 1).padStart(2, '0')}</span>
                         <h3 className="display-type mt-2 text-3xl font-extrabold tracking-[-0.05em]">{category.title}</h3>
-                        <p className="mt-2 text-sm text-ink/60">{category.tags.join(' · ') || `${category.images.length} images`}</p>
+                        <p className={`mt-2 text-sm ${category.isDark ? 'text-paper/75' : 'text-ink/60'}`}>{category.tags.join(' · ') || `${category.images.length} images`}</p>
                       </div>
-                      <span className="grid size-10 shrink-0 place-items-center rounded-full border-2 border-ink bg-paper transition group-hover:bg-ink group-hover:text-paper">↗</span>
+                      <span className="grid size-10 shrink-0 place-items-center rounded-full border-2 border-ink bg-paper text-ink transition group-hover:bg-ink group-hover:text-paper">↗</span>
                     </div>
                   </motion.button>
                 ))}
@@ -113,7 +114,7 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
         {selectedCollection && (
           <motion.div role="dialog" aria-modal="true" aria-label={`${selectedCollection.title} gallery`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] overflow-y-auto bg-ink/45 p-3 backdrop-blur-md md:p-6">
             <button type="button" tabIndex={-1} aria-label="Close gallery" onClick={() => setSelectedCategory(null)} className="fixed inset-0 cursor-default" />
-            <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 20, opacity: 0 }} className="relative mx-auto min-h-full max-w-[82rem] rounded-[2rem] border-2 border-ink bg-cream p-5 shadow-[10px_10px_0_#241B2F] md:p-9">
+            <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 20, opacity: 0 }} className="relative mx-auto min-h-full max-w-[82rem] rounded-[2rem] border-2 border-ink bg-cream p-5 shadow-[10px_10px_0_#241B45] md:p-9">
               <header className="sticky top-0 z-10 flex items-start justify-between border-b-2 border-ink/15 bg-cream/95 pb-5 backdrop-blur">
                 <div>
                   <p className="eyebrow text-coral">Collection gallery</p>

@@ -28,7 +28,7 @@ function Montage() {
         />
 
         <div className="mt-16 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="relative min-h-[32rem] overflow-hidden rounded-[2rem] border-2 border-ink bg-ink p-7 text-paper shadow-[8px_8px_0_#FF7657] md:p-10">
+          <div className="relative min-h-[32rem] overflow-hidden rounded-[2rem] border-2 border-ink bg-ink p-7 text-paper shadow-[8px_8px_0_#FFD700] md:p-10">
             <span className="paper-tape left-12 top-0 -translate-y-1/2" />
             <div className="flex h-full flex-col justify-between">
               <div className="flex justify-between font-mono text-xs uppercase tracking-wider text-paper/60">
@@ -57,8 +57,8 @@ function Montage() {
               <motion.article
                 key={title}
                 whileHover={{ y: -6, rotate: 0 }}
-                className={`rounded-[1.5rem] border-2 border-ink p-6 shadow-[5px_5px_0_#241B2F] ${
-                  index % 3 === 0 ? 'bg-lilac -rotate-1' : index % 3 === 1 ? 'bg-paper rotate-1' : 'bg-sage -rotate-1'
+                className={`rounded-[1.5rem] border-2 border-ink p-6 shadow-[5px_5px_0_#241B45] ${
+                  index % 3 === 0 ? 'bg-lilac text-paper -rotate-1' : index % 3 === 1 ? 'bg-paper rotate-1' : 'bg-sage -rotate-1'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -66,7 +66,7 @@ function Montage() {
                   <span className="size-3 rounded-full border-2 border-ink bg-coral" />
                 </div>
                 <h3 className="display-type mt-12 text-2xl font-bold tracking-[-0.04em]">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-ink/65">{description}</p>
+                <p className={`mt-3 text-sm leading-6 ${index % 3 === 0 ? 'text-paper/75' : 'text-ink/65'}`}>{description}</p>
               </motion.article>
             ))}
           </div>

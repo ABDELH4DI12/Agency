@@ -7,15 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#241B2F',
-        cream: '#F7F0E6',
-        paper: '#FFFDF8',
-        coral: '#FF7657',
-        sage: '#A9BE9B',
-        butter: '#F2D06B',
-        lilac: '#C9B7EE',
-        smoke: '#6D6473',
-        panel: '#EEE5D8',
+        ink: '#241B45',
+        cream: '#E6E6FA',
+        paper: '#FCFBFF',
+        coral: '#FFD700',
+        sage: '#A67CBA',
+        butter: '#F0E68C',
+        lilac: '#6A5ACD',
+        smoke: '#625C78',
+        panel: '#D8D5EF',
         purple: { 
           400: '#C084FC', 
           500: '#A855F7', 
@@ -41,7 +41,7 @@ export default {
         outfit: ['Outfit', 'sans-serif'],
       },
       boxShadow: {
-        craft: '0 18px 45px rgba(60, 42, 67, 0.12)',
+        craft: '0 18px 45px rgba(63, 49, 113, 0.14)',
       }
     }
   },
