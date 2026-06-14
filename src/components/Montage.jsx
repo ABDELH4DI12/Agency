@@ -1,39 +1,15 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import SectionHeading from './SectionHeading'
-import { hoverLift, revealUp } from '../lib/motion'
+import { revealUp } from '../lib/motion'
 
 const SERVICES = [
-  {
-    title: 'Editorial rhythm',
-    description: 'Cuts and transitions designed around pace, emphasis, and attention.',
-    meta: 'Edit direction',
-  },
-  {
-    title: 'Cinematic color',
-    description: 'Color systems that establish atmosphere and make every frame feel authored.',
-    meta: 'Color grading',
-  },
-  {
-    title: 'Visual effects',
-    description: 'Compositing and crafted moments that heighten the idea without overwhelming it.',
-    meta: 'VFX',
-  },
-  {
-    title: 'Sound architecture',
-    description: 'Music, texture, and spatial sound used to give the work emotional weight.',
-    meta: 'Sound design',
-  },
-  {
-    title: 'Narrative shape',
-    description: 'Strong story arcs that turn raw material into a clear, memorable progression.',
-    meta: 'Storytelling',
-  },
-  {
-    title: 'Motion language',
-    description: 'Reusable movement principles that make a brand recognizable even without a logo.',
-    meta: 'Motion systems',
-  },
+  ['01', 'Editorial rhythm', 'Cuts, pacing, and transitions that make the story feel natural.'],
+  ['02', 'Cinematic color', 'Color direction that gives every frame a clear atmosphere.'],
+  ['03', 'Visual effects', 'Crafted moments that add wonder without distracting from the idea.'],
+  ['04', 'Sound design', 'Music and texture that give the work weight, pace, and emotion.'],
+  ['05', 'Story structure', 'A strong beginning, middle, and end shaped from raw material.'],
+  ['06', 'Motion systems', 'Reusable movement rules that make a brand feel recognizable.'],
 ]
 
 function Montage() {
@@ -42,42 +18,34 @@ function Montage() {
 
   return (
     <section id="montage" ref={sectionRef} className="section-shell section-rule">
-      <motion.div
-        initial="hidden"
-        animate={isInView ? 'visible' : 'hidden'}
-        variants={revealUp}
-        className="section-inner"
-      >
+      <motion.div initial="hidden" animate={isInView ? 'visible' : 'hidden'} variants={revealUp} className="section-inner">
         <SectionHeading
           index="04"
           eyebrow="Motion and montage"
-          title="We edit for the"
-          accent="feeling after."
-          description="Not movement for its own sake. We shape rhythm, sound, color, and narrative so the final piece stays with the viewer."
+          title="Stories with"
+          accent="rhythm."
+          description="We shape footage, color, sound, and motion into pieces that feel intentional from the first frame to the last."
         />
 
-        <div className="mt-20 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="relative min-h-[34rem] overflow-hidden rounded-[2rem] border border-white/15 bg-electric p-7 text-ink md:p-10">
-            <div className="absolute -right-20 -top-20 size-72 rounded-full border border-ink/20" />
-            <div className="absolute -right-6 top-16 size-44 rounded-full border border-ink/25" />
-            <div className="relative flex h-full flex-col justify-between">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-[0.16em]">Creative Horizons / Motion</span>
-                <span className="font-mono text-xs">04</span>
+        <div className="mt-16 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="relative min-h-[32rem] overflow-hidden rounded-[2rem] border-2 border-ink bg-ink p-7 text-paper shadow-[8px_8px_0_#FF7657] md:p-10">
+            <span className="paper-tape left-12 top-0 -translate-y-1/2" />
+            <div className="flex h-full flex-col justify-between">
+              <div className="flex justify-between font-mono text-xs uppercase tracking-wider text-paper/60">
+                <span>Creative Horizons / Motion</span>
+                <span>REC ●</span>
               </div>
               <div>
-                <p className="display-serif text-5xl leading-[0.9] md:text-7xl">
-                  Frame by frame.
+                <p className="display-type text-5xl font-bold leading-[0.95] tracking-[-0.055em] md:text-7xl">
+                  Frame.
                   <br />
-                  Beat by beat.
+                  Beat.
+                  <br />
+                  Feeling.
                 </p>
-                <div className="mt-10 flex items-end gap-1">
-                  {[24, 54, 34, 76, 45, 92, 61, 34, 70, 44, 82, 28].map((height, index) => (
-                    <span
-                      key={`${height}-${index}`}
-                      className="block w-full rounded-full bg-ink"
-                      style={{ height: `${height}px`, opacity: 0.3 + index * 0.04 }}
-                    />
+                <div className="mt-10 flex h-24 items-end gap-1.5">
+                  {[30, 62, 42, 84, 55, 92, 68, 38, 74, 50, 88, 34].map((height, index) => (
+                    <span key={`${height}-${index}`} className={`w-full rounded-full ${index % 3 === 0 ? 'bg-coral' : index % 3 === 1 ? 'bg-lilac' : 'bg-sage'}`} style={{ height }} />
                   ))}
                 </div>
               </div>
@@ -85,23 +53,20 @@ function Montage() {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            {SERVICES.map((service, index) => (
+            {SERVICES.map(([number, title, description], index) => (
               <motion.article
-                key={service.title}
-                whileHover={hoverLift}
-                className="group surface-card flex min-h-64 flex-col justify-between rounded-[2rem] p-6 md:p-7"
+                key={title}
+                whileHover={{ y: -6, rotate: 0 }}
+                className={`rounded-[1.5rem] border-2 border-ink p-6 shadow-[5px_5px_0_#241B2F] ${
+                  index % 3 === 0 ? 'bg-lilac -rotate-1' : index % 3 === 1 ? 'bg-paper rotate-1' : 'bg-sage -rotate-1'
+                }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-smoke">0{index + 1}</span>
-                  <span className="size-2 rounded-full bg-electric transition group-hover:bg-acid" />
+                  <span className="font-mono text-xs">{number}</span>
+                  <span className="size-3 rounded-full border-2 border-ink bg-coral" />
                 </div>
-                <div>
-                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-acid">{service.meta}</p>
-                  <h3 className="signal-line mt-3 inline-block pb-3 text-2xl font-semibold tracking-[-0.04em] text-paper">
-                    {service.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-smoke">{service.description}</p>
-                </div>
+                <h3 className="display-type mt-12 text-2xl font-bold tracking-[-0.04em]">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-ink/65">{description}</p>
               </motion.article>
             ))}
           </div>

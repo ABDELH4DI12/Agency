@@ -7,12 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#080807',
-        paper: '#F3F0E8',
-        acid: '#D8FF3E',
-        electric: '#8C52FF',
-        smoke: '#A9A49C',
-        panel: '#11110F',
+        ink: '#241B2F',
+        cream: '#F7F0E6',
+        paper: '#FFFDF8',
+        coral: '#FF7657',
+        sage: '#A9BE9B',
+        butter: '#F2D06B',
+        lilac: '#C9B7EE',
+        smoke: '#6D6473',
+        panel: '#EEE5D8',
         purple: { 
           400: '#C084FC', 
           500: '#A855F7', 
@@ -32,12 +35,13 @@ export default {
         }
       },
       fontFamily: { 
-        sans: ['DM Sans', 'sans-serif'],
-        display: ['Instrument Serif', 'serif'],
+        sans: ['Manrope', 'sans-serif'],
+        display: ['Epilogue', 'sans-serif'],
+        mono: ['DM Mono', 'monospace'],
         outfit: ['Outfit', 'sans-serif'],
       },
       boxShadow: {
-        glow: '0 0 80px rgba(140, 82, 255, 0.2)',
+        craft: '0 18px 45px rgba(60, 42, 67, 0.12)',
       }
     }
   },
