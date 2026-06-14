@@ -7,6 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        ink: '#080807',
+        paper: '#F3F0E8',
+        acid: '#D8FF3E',
+        electric: '#8C52FF',
+        smoke: '#A9A49C',
+        panel: '#11110F',
         purple: { 
           400: '#C084FC', 
           500: '#A855F7', 
@@ -26,7 +32,12 @@ export default {
         }
       },
       fontFamily: { 
-        outfit: ['Outfit', 'sans-serif'] 
+        sans: ['DM Sans', 'sans-serif'],
+        display: ['Instrument Serif', 'serif'],
+        outfit: ['Outfit', 'sans-serif'],
+      },
+      boxShadow: {
+        glow: '0 0 80px rgba(140, 82, 255, 0.2)',
       }
     }
   },

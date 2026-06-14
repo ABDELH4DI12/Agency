@@ -1,170 +1,157 @@
 /* eslint-disable react/prop-types */
-import { useMemo, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { hoverLift, revealUp } from '../lib/motion';
-
-const PROJECT_COLOR_CYCLE = ['amber', 'orange', 'purple'];
+import { useMemo, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import SectionHeading from './SectionHeading'
+import { hoverLift, revealUp } from '../lib/motion'
 
 function parseTags(tags) {
   return String(tags || '')
     .split(',')
     .map((tag) => tag.trim())
-    .filter(Boolean);
+    .filter(Boolean)
 }
 
 function Projects({ websites = [], isLoading = false, error = '' }) {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
   const projects = useMemo(
     () =>
       websites.map((website, index) => {
-        const tags = parseTags(website.headTags || website.footTags);
+        const tags = parseTags(website.headTags || website.footTags)
 
         return {
           id: website.id,
           title: website.title || `Website #${website.id}`,
-          category: tags[0] || 'Website',
+          category: tags[0] || 'Digital experience',
           description: website.description || '',
           image: website.imageUrl || '',
-          tags: tags.slice(1),
-          categoryColor: PROJECT_COLOR_CYCLE[index % PROJECT_COLOR_CYCLE.length],
-          reverse: index % 2 === 1,
+          tags: tags.slice(1, 4),
           link: website.websiteUrl || '#contact',
-        };
+          number: String(index + 1).padStart(2, '0'),
+        }
       }),
     [websites]
-  );
-
-  const getCategoryColorClasses = (color) => {
-    const colors = {
-      amber: "bg-amber-600/20 text-amber-400 border-amber-500/30",
-      orange: "bg-orange-600/20 text-orange-400 border-orange-500/30",
-      purple: "bg-purple-600/20 text-purple-400 border-purple-500/30"
-    };
-    return colors[color] || colors.purple;
-  };
+  )
 
   return (
-    <section id="projects" className="py-32 bg-black px-4 md:px-16 relative" ref={sectionRef}>
-      <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <motion.div 
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={revealUp}
-          className="mb-20 text-center"
-        >
-          <p className="text-violet-300 font-medium tracking-widest uppercase mb-4 text-sm">
-            Selected Works
-          </p>
-          <h2 className="text-4xl md:text-6xl font-black text-white">
-            Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-fuchsia-400">
-              Masterpieces
-            </span>
-          </h2>
-        </motion.div>
+    <section id="projects" ref={sectionRef} className="section-shell section-rule">
+      <motion.div
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        variants={revealUp}
+        className="section-inner"
+      >
+        <SectionHeading
+          index="02"
+          eyebrow="Selected work"
+          title="Digital work with a"
+          accent="point of view."
+          description="A selection of brand-led websites built to communicate quickly, move smoothly, and make the business feel unmistakable."
+        />
 
-        {/* Projects Grid */}
-        <div className="space-y-16">
+        <div className="mt-20">
           {isLoading && projects.length === 0 && (
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-2">
               {[0, 1, 2].map((item) => (
-                <div key={item} className="h-72 animate-pulse rounded-2xl border border-white/10 bg-white/5" />
+                <div
+                  key={item}
+                  className={`animate-pulse rounded-[2rem] border border-white/10 bg-white/[0.04] ${
+                    item === 0 ? 'h-[34rem] md:col-span-2' : 'h-[28rem]'
+                  }`}
+                />
               ))}
             </div>
           )}
 
           {!isLoading && error && projects.length === 0 && (
-            <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-6 py-5 text-center text-sm font-semibold text-red-200">
-              {error}
-            </div>
+            <div className="surface-card rounded-3xl px-6 py-12 text-center text-red-200">{error}</div>
           )}
 
           {!isLoading && !error && projects.length === 0 && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-sm font-semibold text-gray-400">
+            <div className="surface-card rounded-3xl px-6 py-12 text-center text-sm text-smoke">
               No website projects are available yet.
             </div>
           )}
 
-          {projects.map((project, index) => (
-            <motion.div 
-              key={project.id || index}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={revealUp}
-              custom={Math.min(index, 6) * 0.08}
-              className={`group grid md:grid-cols-2 gap-8 items-center ${project.reverse ? 'md:grid-flow-dense' : ''}`}
-            >
-              <motion.a
-                href={project.link}
-                target={project.link.startsWith('http') ? '_blank' : undefined}
-                rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                whileHover={{ scale: 1.01 }}
-                transition={{ duration: 0.25 }}
-                className={`relative rounded-2xl overflow-hidden border border-white/10 bg-gray-900/50 ${project.reverse ? 'md:order-2' : ''} block`}
-              >
-                {project.image ? (
-                  <img 
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-auto"
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                  />
-                ) : (
-                  <div className="flex aspect-video items-center justify-center bg-white/5 text-sm font-semibold text-gray-500">
-                    {project.title}
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileHover={{ opacity: 1, scale: 1 }}
-                    className="bg-white/90 backdrop-blur-sm rounded-full p-4 opacity-0 group-hover:opacity-100 transition-opacity"
+          {projects.length > 0 && (
+            <div className="grid gap-5 md:grid-cols-2">
+              {projects.map((project, index) => {
+                const external = project.link.startsWith('http')
+
+                return (
+                  <motion.a
+                    key={project.id || index}
+                    href={project.link}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noopener noreferrer' : undefined}
+                    whileHover={hoverLift}
+                    className={`group relative min-h-[30rem] overflow-hidden rounded-[2rem] border border-white/15 bg-panel ${
+                      index === 0 ? 'md:col-span-2 md:min-h-[42rem]' : ''
+                    }`}
                   >
-                    <svg className="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                    </svg>
-                  </motion.div>
-                </div>
-              </motion.a>
-              <div className={`space-y-4 ${project.reverse ? 'md:order-1' : ''}`}>
-                <span className={`px-3 py-1 ${getCategoryColorClasses(project.categoryColor)} border rounded-full text-xs font-bold uppercase tracking-wider inline-block`}>
-                  {project.category}
-                </span>
-                <h3 className="text-3xl md:text-4xl font-black text-white">{project.title}</h3>
-                <p className="text-gray-400 text-lg leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex gap-2 pt-2">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span 
-                      key={tagIndex}
-                      className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-white"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <motion.a
-                  href={project.link}
-                  target={project.link.startsWith('http') ? '_blank' : undefined}
-                  rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  whileHover={hoverLift}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-semibold transition-colors mt-4"
-                >
-                  View Live Site
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                  </svg>
-                </motion.a>
-              </div>
-            </motion.div>
-          ))}
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 grid place-items-center bg-white/[0.04] text-smoke">
+                        {project.title}
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/5" />
+
+                    <div className="absolute inset-x-0 top-0 flex items-start justify-between p-6 md:p-8">
+                      <span className="rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur-md">
+                        {project.category}
+                      </span>
+                      <span className="font-mono text-xs text-paper/70">/{project.number}</span>
+                    </div>
+
+                    <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                      <div className="flex items-end justify-between gap-6">
+                        <div>
+                          <h3
+                            className={`max-w-3xl font-semibold leading-[0.92] tracking-[-0.055em] text-paper ${
+                              index === 0 ? 'text-5xl md:text-7xl' : 'text-4xl md:text-5xl'
+                            }`}
+                          >
+                            {project.title}
+                          </h3>
+                          {project.description && (
+                            <p className="mt-4 max-w-xl text-sm leading-6 text-paper/70 md:text-base">
+                              {project.description}
+                            </p>
+                          )}
+                          {project.tags.length > 0 && (
+                            <div className="mt-5 flex flex-wrap gap-2">
+                              {project.tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="rounded-full border border-white/15 bg-black/20 px-3 py-1 text-xs text-paper/75 backdrop-blur-md"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <span className="hidden size-14 shrink-0 place-items-center rounded-full bg-acid text-xl text-ink transition-transform group-hover:rotate-45 md:grid">
+                          ↗
+                        </span>
+                      </div>
+                    </div>
+                  </motion.a>
+                )
+              })}
+            </div>
+          )}
         </div>
-      </div>
+      </motion.div>
     </section>
-  );
+  )
 }
 
-export default Projects;
+export default Projects

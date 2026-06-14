@@ -1,44 +1,61 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { revealScale } from '../lib/motion';
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { revealUp } from '../lib/motion'
 
 function Contact() {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.18 })
 
   return (
-    <section id="contact" className="py-32 px-4 md:px-16 relative" ref={sectionRef}>
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.div 
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={revealScale}
-          className="cta-content p-12 md:p-20 rounded-3xl bg-gradient-to-br from-purple-900/50 to-gray-900 border border-purple-500/20 relative overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.1),transparent_70%)]"></div>
-          <div className="relative z-10">
-            <h2 className="text-4xl md:text-6xl font-black mb-6">
-              Let&apos;s Create <span className="text-violet-300">Together</span>
-            </h2>
-            <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-              Ready to transform your brand? We&apos;re here to bring your vision to life with stunning designs and powerful websites.
-            </p>
-            <motion.a 
-              href="mailto:hello@creative.agency"
-              whileHover={{ scale: 1.05, y: -5 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500 to-fuchsia-400 text-gray-900 rounded-full font-bold hover:shadow-lg hover:shadow-yellow-500/30 transition-all"
-            >
-              Start Your Project
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </motion.a>
+    <section id="contact" ref={sectionRef} className="section-shell section-rule">
+      <motion.div
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        variants={revealUp}
+        className="section-inner"
+      >
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-paper p-7 text-ink md:p-12 lg:p-16">
+          <div className="pointer-events-none absolute -right-24 -top-32 size-[30rem] rounded-full border border-ink/10" />
+          <div className="pointer-events-none absolute -right-5 top-12 size-72 rounded-full border border-ink/10" />
+
+          <div className="relative grid gap-16 lg:grid-cols-[1fr_19rem] lg:items-end">
+            <div>
+              <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em]">
+                <span className="h-px w-8 bg-ink" />
+                Start a conversation
+              </p>
+              <h2 className="mt-8 max-w-5xl text-balance text-6xl font-semibold leading-[0.82] tracking-[-0.07em] md:text-8xl lg:text-[8.5rem]">
+                Let&apos;s make
+                <br />
+                something <span className="display-serif italic font-normal text-electric">matter.</span>
+              </h2>
+            </div>
+
+            <div>
+              <p className="text-base leading-7 text-ink/65">
+                Tell us what you are building, what is not working, or where you want the brand to go next.
+              </p>
+              <a
+                href="mailto:hello@creative.agency"
+                className="mt-8 flex items-center justify-between gap-5 rounded-full bg-ink px-6 py-4 text-sm font-bold text-paper transition hover:bg-electric"
+              >
+                hello@creative.agency
+                <span className="text-xl">↗</span>
+              </a>
+            </div>
           </div>
-        </motion.div>
-      </div>
+
+          <div className="relative mt-16 flex flex-col gap-4 border-t border-ink/15 pt-6 text-xs font-semibold uppercase tracking-[0.14em] text-ink/60 sm:flex-row sm:items-center sm:justify-between">
+            <span>Brand · Web · Motion · Automation</span>
+            <span className="flex items-center gap-2 text-ink">
+              <span className="size-2 rounded-full bg-electric" />
+              Taking on new projects
+            </span>
+          </div>
+        </div>
+      </motion.div>
     </section>
-  );
+  )
 }
 
-export default Contact;
+export default Contact

@@ -1,183 +1,121 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { revealScale, revealUp } from '../lib/motion';
+import { useEffect, useRef, useState } from 'react'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
+import SectionHeading from './SectionHeading'
+import { revealUp } from '../lib/motion'
+
+const PRINCIPLES = [
+  ['01', 'Clarity before decoration', 'Every visual decision begins with the message and the audience.'],
+  ['02', 'Systems over fragments', 'Identity, product, motion, and automation should feel like one connected world.'],
+  ['03', 'Momentum by design', 'We build work that is expressive, usable, and ready to move a business forward.'],
+]
 
 function About() {
-  const [stats, setStats] = useState({ projects: 0, clients: 0, years: 0 });
-  const sectionRef = useRef(null);
-  const animationFrameRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.15 });
-  const isSectionVisible = useInView(sectionRef, { amount: 0.05 });
-  const shouldReduceMotion = useReducedMotion();
-  const shouldAnimateAmbient = isSectionVisible && !shouldReduceMotion;
+  const sectionRef = useRef(null)
+  const animationFrameRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.15 })
+  const shouldReduceMotion = useReducedMotion()
+  const [stats, setStats] = useState({ projects: 0, clients: 0, years: 0 })
 
   useEffect(() => {
     if (!isInView) {
-      return undefined;
+      return undefined
     }
 
-    const duration = 2000;
-    const targets = { projects: 150, clients: 50, years: 5 };
+    const targets = { projects: 150, clients: 50, years: 5 }
 
     if (shouldReduceMotion) {
-      setStats(targets);
-      return undefined;
+      setStats(targets)
+      return undefined
     }
 
-    const startTime = performance.now();
+    const duration = 1400
+    const startTime = performance.now()
 
-    const animate = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = 1 - Math.pow(1 - progress, 3);
+    const animate = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
 
       setStats({
-        projects: Math.floor(targets.projects * easedProgress),
-        clients: Math.floor(targets.clients * easedProgress),
-        years: Math.floor(targets.years * easedProgress),
-      });
+        projects: Math.floor(targets.projects * eased),
+        clients: Math.floor(targets.clients * eased),
+        years: Math.floor(targets.years * eased),
+      })
 
       if (progress < 1) {
-        animationFrameRef.current = requestAnimationFrame(animate);
+        animationFrameRef.current = requestAnimationFrame(animate)
       }
-    };
+    }
 
-    animationFrameRef.current = requestAnimationFrame(animate);
+    animationFrameRef.current = requestAnimationFrame(animate)
 
     return () => {
       if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+        cancelAnimationFrame(animationFrameRef.current)
       }
-    };
-  }, [isInView, shouldReduceMotion]);
+    }
+  }, [isInView, shouldReduceMotion])
 
   return (
-    <section id="about" className="py-32 px-4 md:px-16 relative overflow-hidden" ref={sectionRef}>
-      {/* Background decorations */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl"></div>
-      
-      <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <motion.div 
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={revealUp}
-            className="about-content"
-          >
-            <p className="text-violet-300 font-medium tracking-widest uppercase mb-4">Who We Are</p>
-            <h2 className="text-4xl md:text-6xl font-black mb-8">
-              Crafting <span className="text-purple-500">Excellence</span> Since Day One
-            </h2>
-            <p className="text-gray-400 text-lg leading-relaxed mb-8">
-              We&apos;re a passionate team of designers and developers dedicated to creating extraordinary digital
-              experiences. From stunning websites to eye-catching graphics, we bring your vision to life with
-              creativity and precision.
+    <section id="about" ref={sectionRef} className="section-shell section-rule">
+      <motion.div
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        variants={revealUp}
+        className="section-inner"
+      >
+        <SectionHeading
+          index="01"
+          eyebrow="How we think"
+          title="A studio for brands that"
+          accent="refuse sameness."
+          description="We combine strategy, design, technology, and motion to create work that earns attention and keeps delivering after launch."
+        />
+
+        <div className="mt-20 grid gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-24">
+          <div>
+            <p className="display-serif text-balance text-3xl leading-[1.12] text-paper md:text-5xl">
+              We are small enough to stay close to the idea and experienced enough to carry it across every touchpoint.
             </p>
-            <div className="grid grid-cols-3 gap-8">
-              <motion.div 
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={revealUp}
-                custom={0.08}
-                className="stat-item"
-              >
-                <span className="stat-number text-4xl font-black text-purple-500">
-                  {stats.projects}
-                </span>
-                <span className="text-purple-500 text-4xl font-black">+</span>
-                <p className="text-gray-500 text-sm mt-2">Projects Done</p>
-              </motion.div>
-              <motion.div 
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={revealUp}
-                custom={0.14}
-                className="stat-item"
-              >
-                <span className="stat-number text-4xl font-black text-violet-300">
-                  {stats.clients}
-                </span>
-                <span className="text-violet-300 text-4xl font-black">+</span>
-                <p className="text-gray-500 text-sm mt-2">Happy Clients</p>
-              </motion.div>
-              <motion.div 
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={revealUp}
-                custom={0.2}
-                className="stat-item"
-              >
-                <span className="stat-number text-4xl font-black text-purple-500">
-                  {stats.years}
-                </span>
-                <span className="text-purple-500 text-4xl font-black">+</span>
-                <p className="text-gray-500 text-sm mt-2">Years Experience</p>
-              </motion.div>
+            <div className="mt-12 grid grid-cols-3 border-y border-white/15">
+              {[
+                [stats.projects, '+', 'Projects'],
+                [stats.clients, '+', 'Clients'],
+                [stats.years, '+', 'Years'],
+              ].map(([value, suffix, label], index) => (
+                <div
+                  key={label}
+                  className={`py-6 ${index > 0 ? 'border-l border-white/15 pl-5 md:pl-7' : ''}`}
+                >
+                  <div className="text-3xl font-semibold tracking-[-0.05em] text-paper md:text-5xl">
+                    {value}
+                    <span className="text-acid">{suffix}</span>
+                  </div>
+                  <p className="mt-2 text-xs uppercase tracking-[0.14em] text-smoke">{label}</p>
+                </div>
+              ))}
             </div>
-          </motion.div>
-          
-          {/* Abstract design element */}
-          <motion.div 
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={revealScale}
-            custom={0.1}
-            className="relative h-[500px] flex items-center justify-center"
-          >
-            {/* Decorative shapes */}
-            <motion.div 
-              animate={shouldAnimateAmbient ? { rotate: [12, 15, 12] } : { rotate: 12 }}
-              transition={{ duration: 4, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
-              className="absolute w-64 h-64 border-2 border-purple-500/30 rounded-3xl"
-            ></motion.div>
-            <motion.div 
-              animate={shouldAnimateAmbient ? { rotate: [-6, -9, -6] } : { rotate: -6 }}
-              transition={{ duration: 5, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
-              className="absolute w-72 h-72 border-2 border-violet-400/20 rounded-3xl"
-            ></motion.div>
-            <motion.div 
-              animate={shouldAnimateAmbient ? { rotate: [45, 50, 45] } : { rotate: 45 }}
-              transition={{ duration: 6, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
-              className="absolute w-48 h-48 bg-gradient-to-br from-purple-600/20 to-fuchsia-500/20 rounded-3xl backdrop-blur-sm"
-            ></motion.div>
-            
-            {/* Central element */}
-            <div className="relative z-10 text-center">
-              <motion.div 
-                animate={shouldAnimateAmbient ? { scale: [1, 1.05, 1] } : { scale: 1 }}
-                transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
-                className="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-600 to-fuchsia-500 flex items-center justify-center shadow-2xl shadow-purple-500/30"
+          </div>
+
+          <div className="border-t border-white/15">
+            {PRINCIPLES.map(([number, title, description]) => (
+              <article
+                key={number}
+                className="group grid gap-4 border-b border-white/15 py-7 sm:grid-cols-[3.5rem_1fr]"
               >
-                <svg className="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                </svg>
-              </motion.div>
-              <p className="text-2xl font-bold text-white mb-2">Creative Vision</p>
-              <p className="text-gray-500">Innovation meets design</p>
-            </div>
-            
-            {/* Floating dots */}
-            <motion.div 
-              animate={shouldAnimateAmbient ? { y: [0, -20, 0] } : { y: 0 }}
-              transition={{ duration: 2, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
-              className="absolute top-10 right-20 w-3 h-3 bg-purple-500 rounded-full"
-            ></motion.div>
-            <motion.div 
-              animate={shouldAnimateAmbient ? { y: [0, -15, 0] } : { y: 0 }}
-              transition={{ duration: 2.5, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut", delay: 0.5 }}
-              className="absolute bottom-20 left-10 w-2 h-2 bg-violet-400 rounded-full"
-            ></motion.div>
-            <motion.div 
-              animate={shouldAnimateAmbient ? { scale: [1, 1.2, 1] } : { scale: 1 }}
-              transition={{ duration: 2, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
-              className="absolute top-1/2 right-10 w-4 h-4 bg-fuchsia-500/50 rounded-full"
-            ></motion.div>
-          </motion.div>
+                <span className="font-mono text-xs text-electric">{number}</span>
+                <div>
+                  <h3 className="signal-line inline-block pb-3 text-xl font-semibold tracking-[-0.03em] text-paper md:text-2xl">
+                    {title}
+                  </h3>
+                  <p className="mt-3 max-w-xl leading-7 text-smoke">{description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
+      </motion.div>
     </section>
-  );
+  )
 }
 
-export default About;
+export default About

@@ -1,222 +1,114 @@
-import { useRef } from 'react';
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { hoverLift, revealUp } from '../lib/motion';
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import SectionHeading from './SectionHeading'
+import { hoverLift, revealUp } from '../lib/motion'
+
+const SERVICES = [
+  {
+    title: 'Editorial rhythm',
+    description: 'Cuts and transitions designed around pace, emphasis, and attention.',
+    meta: 'Edit direction',
+  },
+  {
+    title: 'Cinematic color',
+    description: 'Color systems that establish atmosphere and make every frame feel authored.',
+    meta: 'Color grading',
+  },
+  {
+    title: 'Visual effects',
+    description: 'Compositing and crafted moments that heighten the idea without overwhelming it.',
+    meta: 'VFX',
+  },
+  {
+    title: 'Sound architecture',
+    description: 'Music, texture, and spatial sound used to give the work emotional weight.',
+    meta: 'Sound design',
+  },
+  {
+    title: 'Narrative shape',
+    description: 'Strong story arcs that turn raw material into a clear, memorable progression.',
+    meta: 'Storytelling',
+  },
+  {
+    title: 'Motion language',
+    description: 'Reusable movement principles that make a brand recognizable even without a logo.',
+    meta: 'Motion systems',
+  },
+]
 
 function Montage() {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
-  const isSectionVisible = useInView(sectionRef, { amount: 0.05 });
-  const shouldReduceMotion = useReducedMotion();
-  const shouldAnimateAmbient = isSectionVisible && !shouldReduceMotion;
-
-  const cards = [
-    {
-      title: "Perfect Rhythm",
-      subtitle: "Seamless cuts that match the beat of your story.",
-      color: "purple",
-      icon: "timeline"
-    },
-    {
-      title: "Cinematic Color",
-      subtitle: "Grading that breathes life and mood into every frame.",
-      color: "violet",
-      icon: "circles"
-    },
-    {
-      title: "Visual Magic",
-      subtitle: "High-end VFX and compositing that defy reality.",
-      color: "cyan",
-      icon: "particles"
-    },
-    {
-      title: "Acoustic Depth",
-      subtitle: "Soundscapes that surround and captivate.",
-      color: "blue",
-      icon: "waves"
-    },
-    {
-      title: "Story Arc",
-      subtitle: "Weaving chaos into a coherent narrative.",
-      color: "orange",
-      icon: "path"
-    },
-    {
-      title: "Kinetic Pace",
-      subtitle: "Momentum that keeps eyes glued to the screen.",
-      color: "emerald",
-      icon: "arrows"
-    }
-  ];
-
-  const getColorClasses = (color) => {
-    const colors = {
-      purple: "hover:border-purple-500/50 from-purple-600/10",
-      violet: "hover:border-violet-500/50 from-violet-500/20",
-      cyan: "hover:border-cyan-500/50 from-cyan-500/20",
-      blue: "hover:border-blue-500/50 from-blue-600/10",
-      orange: "hover:border-orange-500/50 from-orange-400/10",
-      emerald: "hover:border-emerald-500/50 from-emerald-500/10"
-    };
-    return colors[color] || colors.purple;
-  };
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.08 })
 
   return (
-    <section id="montage" className="py-32 bg-black relative overflow-hidden" ref={sectionRef}>
-      {/* Abstract Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/40 via-black to-black"></div>
+    <section id="montage" ref={sectionRef} className="section-shell section-rule">
+      <motion.div
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        variants={revealUp}
+        className="section-inner"
+      >
+        <SectionHeading
+          index="04"
+          eyebrow="Motion and montage"
+          title="We edit for the"
+          accent="feeling after."
+          description="Not movement for its own sake. We shape rhythm, sound, color, and narrative so the final piece stays with the viewer."
+        />
 
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Header */}
-        <motion.div 
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={revealUp}
-          className="mb-20 text-center relative"
-        >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px] -z-10"></div>
-          <span className="text-violet-300 font-bold tracking-widest uppercase mb-4 block">The Art of Montage</span>
-          <h2 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tight">
-            WE EDIT <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-fuchsia-500">
-              EMOTIONS
-            </span>
-          </h2>
-          <p className="text-gray-300 text-xl max-w-2xl mx-auto leading-relaxed">
-            It&apos;s not just about cutting clips. It&apos;s about rhythm, color, and the invisible flow that turns footage into a feeling.
-          </p>
-        </motion.div>
-
-        {/* Conceptual Cards Container */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {cards.map((card, index) => (
-            <motion.div
-              key={index}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={revealUp}
-              custom={index * 0.07}
-              whileHover={hoverLift}
-              className={`group relative h-[350px] rounded-3xl overflow-hidden border border-white/10 bg-gray-900/50 backdrop-blur-sm ${getColorClasses(card.color)} transition-colors duration-500`}
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${getColorClasses(card.color).split(' ')[1]} to-transparent group-hover:opacity-100 transition-all duration-500`}></div>
-
-              <div className="absolute inset-0 p-8 flex flex-col justify-between">
-                {/* Icon placeholder - different for each card */}
-                {card.icon === "timeline" && (
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex flex-col gap-4 items-center">
-                    <motion.div 
-                      animate={shouldAnimateAmbient ? { x: [-30, 0] } : { x: 0 }}
-                      transition={{ duration: 0.7, delay: 0.3 }}
-                      className="w-24 h-2 bg-gradient-to-r from-purple-500 to-transparent rounded-full"
-                    ></motion.div>
-                    <motion.div 
-                      animate={shouldAnimateAmbient ? { x: [30, 0] } : { x: 0 }}
-                      transition={{ duration: 0.7, delay: 0.4 }}
-                      className="w-32 h-2 bg-gradient-to-l from-pink-500 to-transparent rounded-full"
-                    ></motion.div>
-                    <motion.div 
-                      animate={shouldAnimateAmbient ? { x: [-15, 0] } : { x: 0 }}
-                      transition={{ duration: 0.7, delay: 0.5 }}
-                      className="w-20 h-2 bg-gradient-to-r from-violet-500 to-transparent rounded-full"
-                    ></motion.div>
-                  </div>
-                )}
-
-                {card.icon === "circles" && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative w-32 h-32">
-                      <motion.div 
-                        animate={shouldAnimateAmbient ? { scale: [1, 1.1, 1] } : { scale: 1 }}
-                        transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0 }}
-                        className="absolute inset-0 rounded-full border-2 border-violet-500/30"
-                      ></motion.div>
-                      <motion.div 
-                        animate={shouldAnimateAmbient ? { scale: [1, 1.15, 1] } : { scale: 1 }}
-                        transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0, delay: 0.5 }}
-                        className="absolute inset-4 rounded-full border-2 border-pink-500/30"
-                      ></motion.div>
-                      <motion.div 
-                        animate={shouldAnimateAmbient ? { scale: [1, 1.2, 1] } : { scale: 1 }}
-                        transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0, delay: 1 }}
-                        className="absolute inset-8 rounded-full border-2 border-purple-500/30"
-                      ></motion.div>
-                    </div>
-                  </div>
-                )}
-
-                {card.icon === "particles" && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div 
-                      animate={shouldAnimateAmbient ? { rotate: [0, 45, 0] } : { rotate: 0 }}
-                      transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0 }}
-                      className="grid grid-cols-3 gap-2"
-                    >
-                      {[...Array(9)].map((_, i) => (
-                        <motion.div 
-                          key={i} 
-                          animate={shouldAnimateAmbient ? { y: [0, -10, 0] } : { y: 0 }}
-                          transition={{ duration: 1.5, repeat: shouldAnimateAmbient ? Infinity : 0, delay: i * 0.1 }}
-                          className="w-3 h-3 bg-cyan-400 rounded-full"
-                        ></motion.div>
-                      ))}
-                    </motion.div>
-                  </div>
-                )}
-
-                {card.icon === "waves" && (
-                  <div className="absolute inset-0 flex items-center justify-center gap-2">
-                    {[12, 24, 16, 32, 16, 24, 12].map((height, i) => (
-                      <motion.div 
-                        key={i} 
-                        animate={shouldAnimateAmbient ? { scaleY: [1, 1.5, 1] } : { scaleY: 1 }}
-                        transition={{ duration: 1, repeat: shouldAnimateAmbient ? Infinity : 0, delay: i * 0.1 }}
-                        className="w-2 bg-blue-500/50 rounded-full"
-                        style={{ height: `${height}px` }}
-                      ></motion.div>
-                    ))}
-                  </div>
-                )}
-
-                {card.icon === "path" && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <svg className="w-48 h-24 stroke-orange-500 fill-none stroke-2" viewBox="0 0 100 50">
-                      <motion.path 
-                        d="M0,50 Q25,0 50,25 T100,0"
-                        initial={{ pathLength: shouldAnimateAmbient ? 0 : 1 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: shouldAnimateAmbient ? 2 : 0, repeat: shouldAnimateAmbient ? Infinity : 0 }}
-                      />
-                    </svg>
-                  </div>
-                )}
-
-                {card.icon === "arrows" && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div 
-                      animate={shouldAnimateAmbient ? { x: [0, 10, 0] } : { x: 0 }}
-                      transition={{ duration: 1.5, repeat: shouldAnimateAmbient ? Infinity : 0 }}
-                      className="relative"
-                    >
-                      <svg className="w-32 h-32 text-emerald-400 relative z-10" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z" />
-                      </svg>
-                    </motion.div>
-                  </div>
-                )}
-
-                <div className="relative z-10 mt-auto">
-                  <h3 className="text-3xl font-black text-white text-center mb-2">{card.title}</h3>
-                  <p className="text-gray-400 text-sm text-center px-4 group-hover:text-gray-300 transition-colors">
-                    {card.subtitle}
-                  </p>
+        <div className="mt-20 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="relative min-h-[34rem] overflow-hidden rounded-[2rem] border border-white/15 bg-electric p-7 text-ink md:p-10">
+            <div className="absolute -right-20 -top-20 size-72 rounded-full border border-ink/20" />
+            <div className="absolute -right-6 top-16 size-44 rounded-full border border-ink/25" />
+            <div className="relative flex h-full flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-[0.16em]">Creative Horizons / Motion</span>
+                <span className="font-mono text-xs">04</span>
+              </div>
+              <div>
+                <p className="display-serif text-5xl leading-[0.9] md:text-7xl">
+                  Frame by frame.
+                  <br />
+                  Beat by beat.
+                </p>
+                <div className="mt-10 flex items-end gap-1">
+                  {[24, 54, 34, 76, 45, 92, 61, 34, 70, 44, 82, 28].map((height, index) => (
+                    <span
+                      key={`${height}-${index}`}
+                      className="block w-full rounded-full bg-ink"
+                      style={{ height: `${height}px`, opacity: 0.3 + index * 0.04 }}
+                    />
+                  ))}
                 </div>
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            {SERVICES.map((service, index) => (
+              <motion.article
+                key={service.title}
+                whileHover={hoverLift}
+                className="group surface-card flex min-h-64 flex-col justify-between rounded-[2rem] p-6 md:p-7"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs text-smoke">0{index + 1}</span>
+                  <span className="size-2 rounded-full bg-electric transition group-hover:bg-acid" />
+                </div>
+                <div>
+                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-acid">{service.meta}</p>
+                  <h3 className="signal-line mt-3 inline-block pb-3 text-2xl font-semibold tracking-[-0.04em] text-paper">
+                    {service.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-smoke">{service.description}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
-      </div>
+      </motion.div>
     </section>
-  );
+  )
 }
 
-export default Montage;
+export default Montage

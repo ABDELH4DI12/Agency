@@ -1,260 +1,222 @@
 /* eslint-disable react/prop-types */
-import { useMemo, useRef, useState } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { hoverLift, revealUp } from '../lib/motion';
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { AnimatePresence, motion, useInView } from 'framer-motion'
+import SectionHeading from './SectionHeading'
+import { hoverLift, revealUp } from '../lib/motion'
 
-const COLLECTION_COL_SPANS = ['lg:col-span-3', 'lg:col-span-3', 'lg:col-span-2', 'lg:col-span-2', 'lg:col-span-2'];
-const COLLECTION_COLORS = ['purple', 'pink', 'blue', 'cyan', 'orange'];
+const CARD_SIZES = [
+  'md:col-span-7 md:row-span-2',
+  'md:col-span-5',
+  'md:col-span-5',
+  'md:col-span-4',
+  'md:col-span-4',
+  'md:col-span-4',
+]
 
 function parseTags(tags) {
   return String(tags || '')
     .split(',')
     .map((tag) => tag.trim())
-    .filter(Boolean);
+    .filter(Boolean)
 }
 
 function Designs({ collections = [], isLoading = false, error = '' }) {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.08 })
+  const [selectedCategory, setSelectedCategory] = useState(null)
   const categories = useMemo(
     () =>
       collections.map((collection, index) => {
-        const tags = parseTags(collection.tags);
-        const images = (collection.images || []).filter((image) => image.imageUrl);
+        const tags = parseTags(collection.tags)
+        const images = (collection.images || []).filter((image) => image.imageUrl)
 
         return {
           id: String(collection.id),
           title: collection.title || `Collection #${collection.id}`,
-          subtitle: tags.length ? tags.slice(0, 4).join(' / ') : `${images.length} images`,
+          subtitle: tags.slice(0, 4).join(' · ') || `${images.length} images`,
           number: String(index + 1).padStart(2, '0'),
-          color: COLLECTION_COLORS[index % COLLECTION_COLORS.length],
-          colSpan: COLLECTION_COL_SPANS[index % COLLECTION_COL_SPANS.length],
           coverImage: images[0]?.imageUrl || '',
+          size: CARD_SIZES[index % CARD_SIZES.length],
           images,
-        };
+        }
       }),
     [collections]
-  );
-  const selectedCollection = categories.find((category) => category.id === selectedCategory);
+  )
+  const selectedCollection = categories.find((category) => category.id === selectedCategory)
 
-  const getColorClasses = (color) => {
-    const colors = {
-      purple: {
-        border: "hover:border-purple-500/50",
-        gradient: "from-purple-500/10",
-        text: "text-purple-500",
-        hoverText: "group-hover:text-purple-400"
-      },
-      pink: {
-        border: "hover:border-pink-500/50",
-        gradient: "from-pink-500/10 via-purple-500/10",
-        text: "text-pink-500",
-        hoverText: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-500 group-hover:to-purple-500"
-      },
-      blue: {
-        border: "hover:border-blue-500/50",
-        gradient: "from-blue-500/10",
-        text: "text-blue-500",
-        hoverText: "group-hover:text-blue-400"
-      },
-      cyan: {
-        border: "hover:border-cyan-500/50",
-        gradient: "from-cyan-500/10",
-        text: "text-cyan-500",
-        hoverText: "group-hover:text-cyan-400"
-      },
-      orange: {
-        border: "hover:border-orange-500/50",
-        gradient: "from-orange-500/10",
-        text: "text-orange-500",
-        hoverText: "group-hover:text-orange-400"
+  useEffect(() => {
+    if (!selectedCollection) {
+      return undefined
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setSelectedCategory(null)
       }
-    };
-    return colors[color] || colors.purple;
-  };
+    }
 
-  const openModal = (categoryId) => {
-    setSelectedCategory(categoryId);
-  };
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
 
-  const closeModal = () => {
-    setSelectedCategory(null);
-  };
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [selectedCollection])
 
   return (
     <>
-      <section id="designs" className="py-32 relative bg-black overflow-hidden min-h-screen flex flex-col justify-center" ref={sectionRef}>
-        {/* Background Elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[10%] left-[20%] w-[30%] h-[30%] bg-purple-900/20 rounded-full blur-[100px] mix-blend-screen animate-pulse"></div>
-          <div className="absolute bottom-[10%] right-[20%] w-[40%] h-[40%] bg-purple-900/10 rounded-full blur-[120px] mix-blend-screen animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-
+      <section id="designs" ref={sectionRef} className="section-shell section-rule">
         <motion.div
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={isInView ? 'visible' : 'hidden'}
           variants={revealUp}
-          className="max-w-7xl mx-auto px-4 md:px-8 w-full z-10 relative"
+          className="section-inner"
         >
-          <div className="text-center mb-20">
-            <p className="text-violet-300 font-medium tracking-widest uppercase mb-4 text-sm">
-              Our Portfolio
-            </p>
-            <h2 className="text-4xl md:text-6xl font-black text-white">
-              Curated <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-fuchsia-400">
-                Collections
-              </span>
-            </h2>
+          <SectionHeading
+            index="03"
+            eyebrow="Visual collections"
+            title="Campaigns, identities, and"
+            accent="graphic worlds."
+            description="A living archive of posters, brand systems, social campaigns, print pieces, spaces, and photography."
+          />
+
+          <div className="mt-20">
+            {isLoading && categories.length === 0 && (
+              <div className="grid gap-5 md:grid-cols-12">
+                {[0, 1, 2, 3, 4].map((item) => (
+                  <div
+                    key={item}
+                    className={`h-80 animate-pulse rounded-[2rem] border border-white/10 bg-white/[0.04] ${
+                      CARD_SIZES[item % CARD_SIZES.length]
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+
+            {!isLoading && error && categories.length === 0 && (
+              <div className="surface-card rounded-3xl px-6 py-12 text-center text-red-200">{error}</div>
+            )}
+
+            {!isLoading && !error && categories.length === 0 && (
+              <div className="surface-card rounded-3xl px-6 py-12 text-center text-sm text-smoke">
+                No collections are available yet.
+              </div>
+            )}
+
+            {categories.length > 0 && (
+              <div className="grid auto-rows-[18rem] gap-5 md:grid-cols-12">
+                {categories.map((category, index) => (
+                  <motion.button
+                    key={category.id}
+                    type="button"
+                    whileHover={hoverLift}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`group relative overflow-hidden rounded-[2rem] border border-white/15 bg-panel text-left ${category.size}`}
+                  >
+                    {category.coverImage ? (
+                      <img
+                        src={category.coverImage}
+                        alt=""
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-700 group-hover:scale-[1.035] group-hover:opacity-90"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(140,82,255,.28),transparent_45%)]" />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/5" />
+                    <div className="absolute inset-0 flex flex-col justify-between p-6 md:p-8">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs text-paper/70">/{category.number}</span>
+                        <span className="grid size-10 place-items-center rounded-full border border-white/25 bg-black/20 text-paper backdrop-blur-md transition group-hover:bg-acid group-hover:text-ink">
+                          ↗
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-acid">
+                          {category.images.length} frames
+                        </p>
+                        <h3
+                          className={`mt-3 font-semibold leading-[0.9] tracking-[-0.055em] text-paper ${
+                            index === 0 ? 'text-5xl md:text-7xl' : 'text-4xl md:text-5xl'
+                          }`}
+                        >
+                          {category.title}
+                        </h3>
+                        <p className="mt-3 text-sm text-paper/65">{category.subtitle}</p>
+                      </div>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            )}
           </div>
-
-          {isLoading && categories.length === 0 && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
-              {[0, 1, 2, 3, 4].map((item) => (
-                <div
-                  key={item}
-                  className={`h-[320px] animate-pulse rounded-3xl border border-white/10 bg-white/5 ${COLLECTION_COL_SPANS[item % COLLECTION_COL_SPANS.length]}`}
-                />
-              ))}
-            </div>
-          )}
-
-          {!isLoading && error && categories.length === 0 && (
-            <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-6 py-5 text-center text-sm font-semibold text-red-200">
-              {error}
-            </div>
-          )}
-
-          {!isLoading && !error && categories.length === 0 && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-sm font-semibold text-gray-400">
-              No collections are available yet.
-            </div>
-          )}
-
-          {categories.length > 0 && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
-            {categories.map((category) => {
-              const colorClasses = getColorClasses(category.color);
-              return (
-                <motion.div
-                  key={category.id}
-                  whileHover={hoverLift}
-                  onClick={() => openModal(category.id)}
-                  className={`group relative h-[320px] rounded-3xl overflow-hidden cursor-pointer ${category.colSpan} bg-[#0a0a0a] border border-white/10 ${colorClasses.border} transition-colors duration-500`}
-                >
-                  {category.coverImage && (
-                    <img
-                      src={category.coverImage}
-                      alt=""
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover opacity-50 transition-all duration-700 group-hover:scale-105 group-hover:opacity-70"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/10"></div>
-                  <div className={`absolute inset-0 bg-gradient-to-br ${colorClasses.gradient} via-transparent to-transparent opacity-1 group-hover:opacity-100 transition-opacity duration-500`}></div>
-
-                  <div className="absolute inset-0 p-8 flex flex-col justify-between">
-                    <div className="flex justify-between items-start">
-                      <span className={`${colorClasses.text} font-mono text-sm tracking-widest uppercase`}>
-                        {category.number}
-                      </span>
-                      <svg 
-                        className={`w-8 h-8 text-white/20 ${colorClasses.text.replace('text-', 'group-hover:text-')} transform transition-all duration-500 group-hover:-translate-y-1 group-hover:translate-x-1`}
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                      </svg>
-                    </div>
-
-                    <div className="relative z-10">
-                      <h3 className={`text-3xl md:text-4xl font-black text-white mb-2 ${colorClasses.hoverText} transition-all duration-300`}>
-                        {category.title}
-                      </h3>
-                      <p className="text-gray-500 group-hover:text-gray-300 transition-colors">
-                        {category.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-            </div>
-          )}
         </motion.div>
       </section>
 
-      {/* Modal */}
       <AnimatePresence>
         {selectedCollection && (
-          <motion.div 
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${selectedCollection.title} gallery`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+            className="fixed inset-0 z-[100] overflow-y-auto bg-ink/95 p-3 backdrop-blur-xl md:p-6"
           >
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-xl"
-              onClick={closeModal}
-            ></motion.div>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ type: "spring", duration: 0.5 }}
-              className="relative w-full max-w-7xl max-h-[90vh] overflow-y-auto bg-[#0a0a0a] border border-white/30 rounded-[2rem] p-6 md:p-12 shadow-2xl"
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-label="Close gallery"
+              onClick={() => setSelectedCategory(null)}
+              className="fixed inset-0 cursor-default"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="relative mx-auto min-h-full max-w-[88rem] rounded-[2rem] border border-white/15 bg-[#0d0d0b] p-5 shadow-2xl md:p-10"
             >
-              <div className="flex justify-between items-center mb-10 border-b border-white/30 pb-6">
+              <header className="sticky top-0 z-10 flex items-start justify-between gap-6 border-b border-white/15 bg-[#0d0d0b]/90 pb-6 backdrop-blur-xl">
                 <div>
-                  <span className="text-purple-500 font-mono text-sm tracking-widest uppercase block mb-2">
-                    Category Gallery
-                  </span>
-                  <h2 className="text-4xl md:text-6xl font-black text-white capitalize">
+                  <p className="eyebrow">Collection archive</p>
+                  <h2 className="mt-4 text-5xl font-semibold tracking-[-0.055em] text-paper md:text-7xl">
                     {selectedCollection.title}
                   </h2>
                 </div>
-                <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={closeModal}
-                  className="group w-14 h-14 rounded-full bg-white/5 border border-white/10 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300"
+                <button
+                  type="button"
+                  onClick={() => setSelectedCategory(null)}
+                  className="grid size-12 shrink-0 place-items-center rounded-full border border-white/20 text-xl text-paper transition hover:bg-paper hover:text-ink"
+                  aria-label="Close gallery"
                 >
-                  <svg 
-                    className="w-6 h-6" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                  </svg>
-                </motion.button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {selectedCollection.images.map((item, index) => (
-                  <motion.div 
-                    key={item.id || index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                    className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-gray-900 flex items-center justify-center"
-                  >
-                    <img 
-                      src={item.imageUrl} 
-                      alt={`${selectedCollection.title} ${index + 1}`}
-                      loading={index < 3 ? 'eager' : 'lazy'}
-                      className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  </motion.div>
-                ))}
-              </div>
-              {selectedCollection.images.length === 0 && (
-                <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-sm font-semibold text-gray-400">
+                  ×
+                </button>
+              </header>
+
+              {selectedCollection.images.length > 0 ? (
+                <div className="mt-8 columns-1 gap-5 sm:columns-2 lg:columns-3">
+                  {selectedCollection.images.map((item, index) => (
+                    <motion.figure
+                      key={item.id || index}
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: Math.min(index, 8) * 0.04 }}
+                      className="mb-5 break-inside-avoid overflow-hidden rounded-2xl border border-white/10 bg-black"
+                    >
+                      <img
+                        src={item.imageUrl}
+                        alt={`${selectedCollection.title} ${index + 1}`}
+                        loading={index < 3 ? 'eager' : 'lazy'}
+                        className="h-auto w-full object-cover"
+                      />
+                    </motion.figure>
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-8 rounded-2xl border border-white/10 px-6 py-12 text-center text-sm text-smoke">
                   No images are available yet.
                 </div>
               )}
@@ -263,7 +225,7 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
         )}
       </AnimatePresence>
     </>
-  );
+  )
 }
 
-export default Designs;
+export default Designs

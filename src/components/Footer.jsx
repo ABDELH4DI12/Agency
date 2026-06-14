@@ -1,44 +1,42 @@
+const FOOTER_LINKS = [
+  ['Projects', '#projects'],
+  ['Collections', '#designs'],
+  ['Motion', '#montage'],
+  ['Automation', '#automation'],
+  ['Contact', '#contact'],
+]
+
 function Footer() {
   return (
-    <footer className="py-16 px-4 md:px-16 border-t border-white/10">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
-          <div className="md:col-span-2">
-            <a href="#" className="text-3xl font-black tracking-tight mb-4 inline-block">
-              CRÉATIVE<span className="text-violet-300">.</span>
+    <footer className="border-t border-white/15 px-5 py-10 md:px-12 md:py-14">
+      <div className="mx-auto max-w-[88rem]">
+        <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-start">
+          <div>
+            <a href="#home" className="inline-flex items-center gap-4" aria-label="Creative Horizons home">
+              <img src="/logo.png" alt="" className="h-11 w-auto" />
+              <span className="text-sm font-bold uppercase tracking-[0.18em] text-paper">Creative Horizons</span>
             </a>
-            <p className="text-gray-500 max-w-md">
-              We craft exceptional digital experiences through stunning design and innovative web development solutions.
+            <p className="mt-6 max-w-md text-sm leading-6 text-smoke">
+              An independent creative agency shaping identities, digital products, campaigns, motion, and smarter workflows.
             </p>
           </div>
-          <div>
-            <h4 className="font-bold mb-4 text-purple-400">Quick Links</h4>
-            <ul className="space-y-2 text-gray-500">
-              <li><a href="#home" className="hover:text-white transition-colors">Home</a></li>
-              <li><a href="#about" className="hover:text-white transition-colors">About</a></li>
-              <li><a href="#projects" className="hover:text-white transition-colors">Projects</a></li>
-              <li><a href="#designs" className="hover:text-white transition-colors">Designs</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold mb-4 text-purple-400">Connect</h4>
-            <ul className="space-y-2 text-gray-500">
-              <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Dribbble</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Behance</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
-            </ul>
-          </div>
+
+          <nav className="grid grid-cols-2 gap-x-12 gap-y-4 text-sm sm:grid-cols-3 lg:grid-cols-2">
+            {FOOTER_LINKS.map(([label, href]) => (
+              <a key={href} href={href} className="text-smoke transition-colors hover:text-paper">
+                {label}
+              </a>
+            ))}
+          </nav>
         </div>
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-gray-600 text-sm">
-          <p>© 2024 Créative Agency. All rights reserved.</p>
-          <p className="mt-4 md:mt-0">
-            Designed with <span className="text-purple-500">♥</span> and lots of coffee
-          </p>
+
+        <div className="mt-16 flex flex-col gap-4 border-t border-white/15 pt-6 text-xs uppercase tracking-[0.14em] text-smoke sm:flex-row sm:items-center sm:justify-between">
+          <span>© {new Date().getFullYear()} Creative Horizons</span>
+          <span>Made with intent in Morocco</span>
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

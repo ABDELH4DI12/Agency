@@ -1,20 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useMemo, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { hoverLift, revealUp } from '../lib/motion';
-
-const PRODUCT_COLORS = ['purple', 'violet', 'cyan'];
+import { useMemo, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import SectionHeading from './SectionHeading'
+import { hoverLift, revealUp } from '../lib/motion'
 
 function parseTags(tags) {
   return String(tags || '')
     .split(',')
     .map((tag) => tag.trim())
-    .filter(Boolean);
+    .filter(Boolean)
 }
 
 function Printing({ items = [], isLoading = false, error = '' }) {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.08 })
   const products = useMemo(
     () =>
       items.map((item, index) => ({
@@ -23,145 +22,107 @@ function Printing({ items = [], isLoading = false, error = '' }) {
         description: item.description || '',
         image: item.imageUrl || '',
         features: parseTags(item.tags),
-        color: PRODUCT_COLORS[index % PRODUCT_COLORS.length],
+        number: String(index + 1).padStart(2, '0'),
       })),
     [items]
-  );
-
-  const getColorClasses = (color) => {
-    const colors = {
-      purple: "hover:border-purple-500/50 group-hover:text-purple-400",
-      violet: "hover:border-violet-500/50 group-hover:text-violet-300",
-      cyan: "hover:border-cyan-500/50 group-hover:text-cyan-400"
-    };
-    return colors[color] || colors.purple;
-  };
-
-  const getFeatureColor = (color) => {
-    const colors = {
-      purple: "bg-purple-500",
-      violet: "bg-violet-400",
-      cyan: "bg-cyan-500"
-    };
-    return colors[color] || colors.purple;
-  };
+  )
 
   return (
-    <section id="printing" className="py-32 bg-gray-950 px-4 md:px-16 relative overflow-hidden" ref={sectionRef}>
-      {/* Decoration */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-purple-900/10 to-transparent"></div>
-
+    <section id="printing" ref={sectionRef} className="section-shell section-rule">
       <motion.div
-        className="max-w-7xl mx-auto relative z-10"
         initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        animate={isInView ? 'visible' : 'hidden'}
         variants={revealUp}
+        className="section-inner"
       >
-        <div className="mb-20 text-center">
-          <p className="text-purple-400 font-medium tracking-widest uppercase mb-4 text-sm">
-            Corporate Solutions
-          </p>
-          <h2 className="text-4xl md:text-6xl font-black text-white">
-            Premium <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-500">
-              Merchandise
-            </span>
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto mt-6 text-lg">
-            Elevate your brand with high-quality printing solutions. From custom apparel to office essentials, we bring your identity to the physical world.
-          </p>
-        </div>
+        <SectionHeading
+          index="07"
+          eyebrow="Print and merchandise"
+          title="Brand presence you can"
+          accent="hold."
+          description="Premium printed objects and merchandise that extend a visual identity into the physical world."
+        />
 
-        {isLoading && products.length === 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[0, 1, 2].map((item) => (
-              <div
-                key={item}
-                aria-hidden="true"
-                className="animate-pulse rounded-3xl border border-white/5 bg-[#0f0f0f] p-8"
-              >
-                <div className="mb-8 h-48 rounded-2xl bg-white/[0.07]" />
-                <div className="h-7 w-2/3 rounded bg-white/10" />
-                <div className="mt-5 space-y-3">
-                  <div className="h-4 w-full rounded bg-white/[0.07]" />
-                  <div className="h-4 w-5/6 rounded bg-white/[0.07]" />
-                </div>
-                <div className="mt-7 space-y-3">
-                  <div className="h-3 w-1/2 rounded bg-white/5" />
-                  <div className="h-3 w-2/5 rounded bg-white/5" />
-                  <div className="h-3 w-3/5 rounded bg-white/5" />
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {!isLoading && error && products.length === 0 && (
-          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-6 py-5 text-center text-sm font-semibold text-red-200">
-            {error}
-          </div>
-        )}
-
-        {!isLoading && !error && products.length === 0 && (
-          <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-sm font-semibold text-gray-400">
-            No merchandise is available yet.
-          </div>
-        )}
-
-        {products.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {products.map((product, index) => (
-            <motion.div
-              key={product.id || index}
-              whileHover={hoverLift}
-              className={`group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 ${getColorClasses(product.color).split(' ')[0]} transition-colors duration-500`}
-            >
-              <div className="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
-                {product.image ? (
-                  <img 
-                    src={product.image}
-                    alt={product.title}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-sm font-semibold text-gray-500">
-                    {product.title}
+        <div className="mt-20">
+          {isLoading && products.length === 0 && (
+            <div className="grid gap-5 md:grid-cols-3">
+              {[0, 1, 2].map((item) => (
+                <div
+                  key={item}
+                  aria-hidden="true"
+                  className="animate-pulse rounded-[2rem] border border-white/10 bg-white/[0.035] p-4"
+                >
+                  <div className="aspect-[4/5] rounded-[1.5rem] bg-white/[0.07]" />
+                  <div className="px-2 pb-4 pt-6">
+                    <div className="h-7 w-2/3 rounded bg-white/10" />
+                    <div className="mt-4 h-4 w-full rounded bg-white/[0.06]" />
+                    <div className="mt-2 h-4 w-4/5 rounded bg-white/[0.06]" />
                   </div>
-                )}
-              </div>
-              <h3 className={`text-2xl font-bold text-white mb-4 ${getColorClasses(product.color).split(' ')[1]} transition-colors`}>
-                {product.title}
-              </h3>
-              <p className="text-gray-400 mb-6">{product.description}</p>
-              <ul className="text-sm text-gray-500 space-y-2">
-                {product.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center gap-2">
-                    <span className={`w-1.5 h-1.5 rounded-full ${getFeatureColor(product.color)}`}></span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-          </div>
-        )}
+                </div>
+              ))}
+            </div>
+          )}
 
-        <div className="mt-16 text-center">
-          <motion.a 
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full font-bold text-white transition-all"
-          >
-            Request Catalog
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-            </svg>
-          </motion.a>
+          {!isLoading && error && products.length === 0 && (
+            <div className="surface-card rounded-3xl px-6 py-12 text-center text-red-200">{error}</div>
+          )}
+
+          {!isLoading && !error && products.length === 0 && (
+            <div className="surface-card rounded-3xl px-6 py-12 text-center text-sm text-smoke">
+              No merchandise is available yet.
+            </div>
+          )}
+
+          {products.length > 0 && (
+            <div className="grid gap-5 md:grid-cols-3">
+              {products.map((product) => (
+                <motion.article
+                  key={product.id}
+                  whileHover={hoverLift}
+                  className="group surface-card overflow-hidden rounded-[2rem] p-4"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-white/[0.04]">
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
+                      />
+                    ) : (
+                      <div className="grid h-full place-items-center text-sm text-smoke">{product.title}</div>
+                    )}
+                    <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
+                      <span className="rounded-full bg-ink/75 px-3 py-1.5 font-mono text-xs text-paper backdrop-blur-md">
+                        /{product.number}
+                      </span>
+                      <span className="size-2 rounded-full bg-acid shadow-[0_0_18px_rgba(216,255,62,.7)]" />
+                    </div>
+                  </div>
+                  <div className="px-2 pb-4 pt-6">
+                    <h3 className="text-3xl font-semibold tracking-[-0.045em] text-paper">{product.title}</h3>
+                    <p className="mt-4 min-h-[4.5rem] text-sm leading-6 text-smoke">{product.description}</p>
+                    {product.features.length > 0 && (
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {product.features.map((feature) => (
+                          <span
+                            key={feature}
+                            className="rounded-full border border-white/15 px-3 py-1 text-xs text-paper/70"
+                          >
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          )}
         </div>
       </motion.div>
     </section>
-  );
+  )
 }
 
-export default Printing;
+export default Printing

@@ -11,7 +11,6 @@ import Printing from './components/Printing'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import AdminPanel from './components/AdminPanel'
-import './App.css'
 
 const EMPTY_CONTENT = {
   websites: [],
@@ -84,7 +83,7 @@ function App() {
   }
 
   return (
-    <div className="bg-gray-950 text-white font-outfit overflow-x-hidden">
+    <div className="site-shell min-h-screen overflow-x-hidden">
       <Navbar />
       <Hero />
       <About />
