@@ -42,6 +42,7 @@ function App() {
       try {
         const response = await fetch('/api/content', {
           signal: controller.signal,
+          cache: 'no-store',
           headers: {
             Accept: 'application/json',
           },

@@ -1,46 +1,55 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { revealScale, revealUp } from '../lib/motion';
 
 function About() {
   const [stats, setStats] = useState({ projects: 0, clients: 0, years: 0 });
-  const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const animationFrameRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.15 });
+  const isSectionVisible = useInView(sectionRef, { amount: 0.05 });
+  const shouldReduceMotion = useReducedMotion();
+  const shouldAnimateAmbient = isSectionVisible && !shouldReduceMotion;
 
   useEffect(() => {
-    if (isInView && !hasAnimated) {
-      setHasAnimated(true);
-      animateStats();
+    if (!isInView) {
+      return undefined;
     }
-  }, [isInView, hasAnimated]);
 
-  const animateStats = () => {
     const duration = 2000;
     const targets = { projects: 150, clients: 50, years: 5 };
-    const startTime = Date.now();
 
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
+    if (shouldReduceMotion) {
+      setStats(targets);
+      return undefined;
+    }
+
+    const startTime = performance.now();
+
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
 
       setStats({
-        projects: Math.floor(targets.projects * progress),
-        clients: Math.floor(targets.clients * progress),
-        years: Math.floor(targets.years * progress),
+        projects: Math.floor(targets.projects * easedProgress),
+        clients: Math.floor(targets.clients * easedProgress),
+        years: Math.floor(targets.years * easedProgress),
       });
 
       if (progress < 1) {
-        requestAnimationFrame(animate);
+        animationFrameRef.current = requestAnimationFrame(animate);
       }
     };
 
-    animate();
-  };
+    animationFrameRef.current = requestAnimationFrame(animate);
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 }
-  };
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [isInView, shouldReduceMotion]);
 
   return (
     <section id="about" className="py-32 px-4 md:px-16 relative overflow-hidden" ref={sectionRef}>
@@ -53,8 +62,7 @@ function About() {
           <motion.div 
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            variants={fadeInUp}
-            transition={{ duration: 0.8 }}
+            variants={revealUp}
             className="about-content"
           >
             <p className="text-violet-300 font-medium tracking-widest uppercase mb-4">Who We Are</p>
@@ -62,7 +70,7 @@ function About() {
               Crafting <span className="text-purple-500">Excellence</span> Since Day One
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed mb-8">
-              We're a passionate team of designers and developers dedicated to creating extraordinary digital
+              We&apos;re a passionate team of designers and developers dedicated to creating extraordinary digital
               experiences. From stunning websites to eye-catching graphics, we bring your vision to life with
               creativity and precision.
             </p>
@@ -70,8 +78,8 @@ function About() {
               <motion.div 
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                variants={revealUp}
+                custom={0.08}
                 className="stat-item"
               >
                 <span className="stat-number text-4xl font-black text-purple-500">
@@ -83,8 +91,8 @@ function About() {
               <motion.div 
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                variants={revealUp}
+                custom={0.14}
                 className="stat-item"
               >
                 <span className="stat-number text-4xl font-black text-violet-300">
@@ -96,8 +104,8 @@ function About() {
               <motion.div 
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.6 }}
+                variants={revealUp}
+                custom={0.2}
                 className="stat-item"
               >
                 <span className="stat-number text-4xl font-black text-purple-500">
@@ -111,33 +119,34 @@ function About() {
           
           {/* Abstract design element */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            variants={revealScale}
+            custom={0.1}
             className="relative h-[500px] flex items-center justify-center"
           >
             {/* Decorative shapes */}
             <motion.div 
-              animate={{ rotate: [12, 15, 12] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              animate={shouldAnimateAmbient ? { rotate: [12, 15, 12] } : { rotate: 12 }}
+              transition={{ duration: 4, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
               className="absolute w-64 h-64 border-2 border-purple-500/30 rounded-3xl"
             ></motion.div>
             <motion.div 
-              animate={{ rotate: [-6, -9, -6] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              animate={shouldAnimateAmbient ? { rotate: [-6, -9, -6] } : { rotate: -6 }}
+              transition={{ duration: 5, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
               className="absolute w-72 h-72 border-2 border-violet-400/20 rounded-3xl"
             ></motion.div>
             <motion.div 
-              animate={{ rotate: [45, 50, 45] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              animate={shouldAnimateAmbient ? { rotate: [45, 50, 45] } : { rotate: 45 }}
+              transition={{ duration: 6, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
               className="absolute w-48 h-48 bg-gradient-to-br from-purple-600/20 to-fuchsia-500/20 rounded-3xl backdrop-blur-sm"
             ></motion.div>
             
             {/* Central element */}
             <div className="relative z-10 text-center">
               <motion.div 
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                animate={shouldAnimateAmbient ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+                transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
                 className="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-600 to-fuchsia-500 flex items-center justify-center shadow-2xl shadow-purple-500/30"
               >
                 <svg className="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,18 +159,18 @@ function About() {
             
             {/* Floating dots */}
             <motion.div 
-              animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              animate={shouldAnimateAmbient ? { y: [0, -20, 0] } : { y: 0 }}
+              transition={{ duration: 2, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
               className="absolute top-10 right-20 w-3 h-3 bg-purple-500 rounded-full"
             ></motion.div>
             <motion.div 
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              animate={shouldAnimateAmbient ? { y: [0, -15, 0] } : { y: 0 }}
+              transition={{ duration: 2.5, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut", delay: 0.5 }}
               className="absolute bottom-20 left-10 w-2 h-2 bg-violet-400 rounded-full"
             ></motion.div>
             <motion.div 
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              animate={shouldAnimateAmbient ? { scale: [1, 1.2, 1] } : { scale: 1 }}
+              transition={{ duration: 2, repeat: shouldAnimateAmbient ? Infinity : 0, ease: "easeInOut" }}
               className="absolute top-1/2 right-10 w-4 h-4 bg-fuchsia-500/50 rounded-full"
             ></motion.div>
           </motion.div>

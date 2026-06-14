@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useMemo, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { hoverLift, revealUp } from '../lib/motion';
 
 const PRODUCT_COLORS = ['purple', 'violet', 'cyan'];
 
@@ -13,7 +14,7 @@ function parseTags(tags) {
 
 function Printing({ items = [], isLoading = false, error = '' }) {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
   const products = useMemo(
     () =>
       items.map((item, index) => ({
@@ -45,24 +46,18 @@ function Printing({ items = [], isLoading = false, error = '' }) {
     return colors[color] || colors.purple;
   };
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
     <section id="printing" className="py-32 bg-gray-950 px-4 md:px-16 relative overflow-hidden" ref={sectionRef}>
       {/* Decoration */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-purple-900/10 to-transparent"></div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div 
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          transition={{ duration: 0.8 }}
-          className="mb-20 text-center"
-        >
+      <motion.div
+        className="max-w-7xl mx-auto relative z-10"
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={revealUp}
+      >
+        <div className="mb-20 text-center">
           <p className="text-purple-400 font-medium tracking-widest uppercase mb-4 text-sm">
             Corporate Solutions
           </p>
@@ -74,12 +69,28 @@ function Printing({ items = [], isLoading = false, error = '' }) {
           <p className="text-gray-400 max-w-2xl mx-auto mt-6 text-lg">
             Elevate your brand with high-quality printing solutions. From custom apparel to office essentials, we bring your identity to the physical world.
           </p>
-        </motion.div>
+        </div>
 
         {isLoading && products.length === 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[0, 1, 2].map((item) => (
-              <div key={item} className="h-96 animate-pulse rounded-3xl border border-white/10 bg-white/5" />
+              <div
+                key={item}
+                aria-hidden="true"
+                className="animate-pulse rounded-3xl border border-white/5 bg-[#0f0f0f] p-8"
+              >
+                <div className="mb-8 h-48 rounded-2xl bg-white/[0.07]" />
+                <div className="h-7 w-2/3 rounded bg-white/10" />
+                <div className="mt-5 space-y-3">
+                  <div className="h-4 w-full rounded bg-white/[0.07]" />
+                  <div className="h-4 w-5/6 rounded bg-white/[0.07]" />
+                </div>
+                <div className="mt-7 space-y-3">
+                  <div className="h-3 w-1/2 rounded bg-white/5" />
+                  <div className="h-3 w-2/5 rounded bg-white/5" />
+                  <div className="h-3 w-3/5 rounded bg-white/5" />
+                </div>
+              </div>
             ))}
           </div>
         )}
@@ -101,12 +112,8 @@ function Printing({ items = [], isLoading = false, error = '' }) {
           {products.map((product, index) => (
             <motion.div
               key={product.id || index}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              whileHover={{ y: -10, scale: 1.02 }}
-              className={`group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 ${getColorClasses(product.color).split(' ')[0]} transition-all duration-500`}
+              whileHover={hoverLift}
+              className={`group relative bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 ${getColorClasses(product.color).split(' ')[0]} transition-colors duration-500`}
             >
               <div className="h-48 mb-8 rounded-2xl overflow-hidden bg-white/5 relative">
                 {product.image ? (
@@ -139,13 +146,7 @@ function Printing({ items = [], isLoading = false, error = '' }) {
           </div>
         )}
 
-        <motion.div 
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 text-center"
-        >
+        <div className="mt-16 text-center">
           <motion.a 
             href="#contact"
             whileHover={{ scale: 1.05 }}
@@ -157,8 +158,8 @@ function Printing({ items = [], isLoading = false, error = '' }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
             </svg>
           </motion.a>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </section>
   );
 }

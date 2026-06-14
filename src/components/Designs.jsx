@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useMemo, useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { hoverLift, revealUp } from '../lib/motion';
 
 const COLLECTION_COL_SPANS = ['lg:col-span-3', 'lg:col-span-3', 'lg:col-span-2', 'lg:col-span-2', 'lg:col-span-2'];
 const COLLECTION_COLORS = ['purple', 'pink', 'blue', 'cyan', 'orange'];
@@ -15,20 +16,22 @@ function parseTags(tags) {
 function Designs({ collections = [], isLoading = false, error = '' }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
   const categories = useMemo(
     () =>
       collections.map((collection, index) => {
         const tags = parseTags(collection.tags);
+        const images = (collection.images || []).filter((image) => image.imageUrl);
 
         return {
           id: String(collection.id),
           title: collection.title || `Collection #${collection.id}`,
-          subtitle: tags.length ? tags.slice(0, 4).join(' / ') : `${collection.images?.length || 0} images`,
+          subtitle: tags.length ? tags.slice(0, 4).join(' / ') : `${images.length} images`,
           number: String(index + 1).padStart(2, '0'),
           color: COLLECTION_COLORS[index % COLLECTION_COLORS.length],
           colSpan: COLLECTION_COL_SPANS[index % COLLECTION_COL_SPANS.length],
-          images: (collection.images || []).filter((image) => image.imageUrl),
+          coverImage: images[0]?.imageUrl || '',
+          images,
         };
       }),
     [collections]
@@ -79,11 +82,6 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
     setSelectedCategory(null);
   };
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
     <>
       <section id="designs" className="py-32 relative bg-black overflow-hidden min-h-screen flex flex-col justify-center" ref={sectionRef}>
@@ -93,14 +91,13 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
           <div className="absolute bottom-[10%] right-[20%] w-[40%] h-[40%] bg-purple-900/10 rounded-full blur-[120px] mix-blend-screen animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full z-10 relative">
-          <motion.div 
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={fadeInUp}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
-          >
+        <motion.div
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={revealUp}
+          className="max-w-7xl mx-auto px-4 md:px-8 w-full z-10 relative"
+        >
+          <div className="text-center mb-20">
             <p className="text-violet-300 font-medium tracking-widest uppercase mb-4 text-sm">
               Our Portfolio
             </p>
@@ -109,7 +106,7 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
                 Collections
               </span>
             </h2>
-          </motion.div>
+          </div>
 
           {isLoading && categories.length === 0 && (
             <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
@@ -136,19 +133,24 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
 
           {categories.length > 0 && (
             <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
-            {categories.map((category, index) => {
+            {categories.map((category) => {
               const colorClasses = getColorClasses(category.color);
               return (
                 <motion.div
                   key={category.id}
-                  initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
-                  variants={fadeInUp}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.02, y: -5 }}
+                  whileHover={hoverLift}
                   onClick={() => openModal(category.id)}
-                  className={`group relative h-[320px] rounded-3xl overflow-hidden cursor-pointer ${category.colSpan} bg-[#0a0a0a] border border-white/10 ${colorClasses.border} transition-all duration-500`}
+                  className={`group relative h-[320px] rounded-3xl overflow-hidden cursor-pointer ${category.colSpan} bg-[#0a0a0a] border border-white/10 ${colorClasses.border} transition-colors duration-500`}
                 >
+                  {category.coverImage && (
+                    <img
+                      src={category.coverImage}
+                      alt=""
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover opacity-50 transition-all duration-700 group-hover:scale-105 group-hover:opacity-70"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/10"></div>
                   <div className={`absolute inset-0 bg-gradient-to-br ${colorClasses.gradient} via-transparent to-transparent opacity-1 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
                   <div className="absolute inset-0 p-8 flex flex-col justify-between">
@@ -180,7 +182,7 @@ function Designs({ collections = [], isLoading = false, error = '' }) {
             })}
             </div>
           )}
-        </div>
+        </motion.div>
       </section>
 
       {/* Modal */}

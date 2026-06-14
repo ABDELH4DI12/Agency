@@ -1,14 +1,10 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { revealScale } from '../lib/motion';
 
 function Contact() {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 }
-  };
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   return (
     <section id="contact" className="py-32 px-4 md:px-16 relative" ref={sectionRef}>
@@ -16,17 +12,16 @@ function Contact() {
         <motion.div 
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          transition={{ duration: 0.8 }}
+          variants={revealScale}
           className="cta-content p-12 md:p-20 rounded-3xl bg-gradient-to-br from-purple-900/50 to-gray-900 border border-purple-500/20 relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.1),transparent_70%)]"></div>
           <div className="relative z-10">
             <h2 className="text-4xl md:text-6xl font-black mb-6">
-              Let's Create <span className="text-violet-300">Together</span>
+              Let&apos;s Create <span className="text-violet-300">Together</span>
             </h2>
             <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-              Ready to transform your brand? We're here to bring your vision to life with stunning designs and powerful websites.
+              Ready to transform your brand? We&apos;re here to bring your vision to life with stunning designs and powerful websites.
             </p>
             <motion.a 
               href="mailto:hello@creative.agency"

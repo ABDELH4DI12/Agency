@@ -198,6 +198,28 @@ export async function deleteRow({ env = process.env, table, id } = {}) {
   return Array.isArray(payload) ? payload[0] : payload
 }
 
+function uniqueRows(rows, getKey) {
+  const seen = new Set()
+
+  return rows.filter((row) => {
+    const key = getKey(row)
+
+    if (!key || seen.has(key)) {
+      return !key
+    }
+
+    seen.add(key)
+    return true
+  })
+}
+
+function normalizeIdentity(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/\/+$/, '')
+}
+
 export async function listPublicContent(options = {}) {
   const [websites, collections, collectionImages, marchendise] = await Promise.all([
     listRows({ ...options, table: 'websites' }),
@@ -215,15 +237,27 @@ export async function listPublicContent(options = {}) {
     imagesById[collectionId].push(image)
     return imagesById
   }, {})
+  const uniqueWebsites = uniqueRows(
+    websites,
+    (website) => normalizeIdentity(website.websiteUrl) || normalizeIdentity(website.title)
+  )
+  const uniqueCollections = uniqueRows(
+    collections,
+    (collection) => normalizeIdentity(collection.title) || `id:${collection.id}`
+  )
+  const uniqueMarchendise = uniqueRows(
+    marchendise,
+    (item) => normalizeIdentity(item.title) || `id:${item.id}`
+  )
 
   return {
-    websites,
-    collections: collections.map((collection) => ({
+    websites: uniqueWebsites,
+    collections: uniqueCollections.map((collection) => ({
       ...collection,
       images: imagesByCollectionId[collection.id] || [],
     })),
     collectionImages,
-    marchendise,
+    marchendise: uniqueMarchendise,
   }
 }
 

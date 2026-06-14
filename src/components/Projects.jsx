@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useMemo, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { hoverLift, revealUp } from '../lib/motion';
 
 const PROJECT_COLOR_CYCLE = ['amber', 'orange', 'purple'];
 
@@ -13,7 +14,7 @@ function parseTags(tags) {
 
 function Projects({ websites = [], isLoading = false, error = '' }) {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
   const projects = useMemo(
     () =>
       websites.map((website, index) => {
@@ -43,11 +44,6 @@ function Projects({ websites = [], isLoading = false, error = '' }) {
     return colors[color] || colors.purple;
   };
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
     <section id="projects" className="py-32 bg-black px-4 md:px-16 relative" ref={sectionRef}>
       <div className="max-w-7xl mx-auto">
@@ -55,8 +51,7 @@ function Projects({ websites = [], isLoading = false, error = '' }) {
         <motion.div 
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          transition={{ duration: 0.8 }}
+          variants={revealUp}
           className="mb-20 text-center"
         >
           <p className="text-violet-300 font-medium tracking-widest uppercase mb-4 text-sm">
@@ -96,16 +91,16 @@ function Projects({ websites = [], isLoading = false, error = '' }) {
               key={project.id || index}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              variants={fadeInUp}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              variants={revealUp}
+              custom={Math.min(index, 6) * 0.08}
               className={`group grid md:grid-cols-2 gap-8 items-center ${project.reverse ? 'md:grid-flow-dense' : ''}`}
             >
               <motion.a
                 href={project.link}
                 target={project.link.startsWith('http') ? '_blank' : undefined}
                 rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.01 }}
+                transition={{ duration: 0.25 }}
                 className={`relative rounded-2xl overflow-hidden border border-white/10 bg-gray-900/50 ${project.reverse ? 'md:order-2' : ''} block`}
               >
                 {project.image ? (
@@ -154,7 +149,7 @@ function Projects({ websites = [], isLoading = false, error = '' }) {
                   href={project.link}
                   target={project.link.startsWith('http') ? '_blank' : undefined}
                   rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileHover={hoverLift}
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-semibold transition-colors mt-4"
                 >

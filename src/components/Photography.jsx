@@ -1,9 +1,10 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { MOTION_EASE, hoverLift, revealUp } from '../lib/motion';
 
 function Photography() {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
 
   const photos = [
     {
@@ -62,20 +63,19 @@ function Photography() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15
+        staggerChildren: 0.08
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    hidden: { opacity: 0, y: 24 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      scale: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: MOTION_EASE
       }
     }
   };
@@ -84,9 +84,9 @@ function Photography() {
     <section id="photography" className="py-32 bg-black relative" ref={sectionRef}>
       <div className="max-w-7xl mx-auto px-4 md:px-16">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={revealUp}
           className="mb-20 text-center"
         >
           <p className="text-violet-300 font-medium tracking-widest uppercase mb-4 text-sm">
@@ -109,8 +109,7 @@ function Photography() {
             <motion.div
               key={index}
               variants={itemVariants}
-              whileHover={{ scale: 1.03, y: -8 }}
-              transition={{ duration: 0.3 }}
+              whileHover={hoverLift}
               className={`group relative rounded-3xl overflow-hidden cursor-pointer ${photo.height} ${photo.colSpan}`}
             >
               <img 

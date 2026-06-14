@@ -11,7 +11,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300')
+    res.setHeader('Cache-Control', 'no-store, max-age=0')
+    res.setHeader('CDN-Cache-Control', 'no-store')
     sendJson(res, 200, await listPublicContent())
   } catch (error) {
     sendJson(res, error.statusCode || 500, {

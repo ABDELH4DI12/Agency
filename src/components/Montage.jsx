@@ -1,9 +1,13 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { hoverLift, revealUp } from '../lib/motion';
 
 function Montage() {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
+  const isSectionVisible = useInView(sectionRef, { amount: 0.05 });
+  const shouldReduceMotion = useReducedMotion();
+  const shouldAnimateAmbient = isSectionVisible && !shouldReduceMotion;
 
   const cards = [
     {
@@ -56,11 +60,6 @@ function Montage() {
     return colors[color] || colors.purple;
   };
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
     <section id="montage" className="py-32 bg-black relative overflow-hidden" ref={sectionRef}>
       {/* Abstract Background */}
@@ -71,8 +70,7 @@ function Montage() {
         <motion.div 
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          transition={{ duration: 0.8 }}
+          variants={revealUp}
           className="mb-20 text-center relative"
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px] -z-10"></div>
@@ -84,7 +82,7 @@ function Montage() {
             </span>
           </h2>
           <p className="text-gray-300 text-xl max-w-2xl mx-auto leading-relaxed">
-            It's not just about cutting clips. It's about rhythm, color, and the invisible flow that turns footage into a feeling.
+            It&apos;s not just about cutting clips. It&apos;s about rhythm, color, and the invisible flow that turns footage into a feeling.
           </p>
         </motion.div>
 
@@ -95,9 +93,9 @@ function Montage() {
               key={index}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ scale: 1.05, y: -10 }}
+              variants={revealUp}
+              custom={index * 0.07}
+              whileHover={hoverLift}
               className={`group relative h-[350px] rounded-3xl overflow-hidden border border-white/10 bg-gray-900/50 backdrop-blur-sm ${getColorClasses(card.color)} transition-colors duration-500`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${getColorClasses(card.color).split(' ')[1]} to-transparent group-hover:opacity-100 transition-all duration-500`}></div>
@@ -107,17 +105,17 @@ function Montage() {
                 {card.icon === "timeline" && (
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex flex-col gap-4 items-center">
                     <motion.div 
-                      animate={{ x: [-30, 0] }}
+                      animate={shouldAnimateAmbient ? { x: [-30, 0] } : { x: 0 }}
                       transition={{ duration: 0.7, delay: 0.3 }}
                       className="w-24 h-2 bg-gradient-to-r from-purple-500 to-transparent rounded-full"
                     ></motion.div>
                     <motion.div 
-                      animate={{ x: [30, 0] }}
+                      animate={shouldAnimateAmbient ? { x: [30, 0] } : { x: 0 }}
                       transition={{ duration: 0.7, delay: 0.4 }}
                       className="w-32 h-2 bg-gradient-to-l from-pink-500 to-transparent rounded-full"
                     ></motion.div>
                     <motion.div 
-                      animate={{ x: [-15, 0] }}
+                      animate={shouldAnimateAmbient ? { x: [-15, 0] } : { x: 0 }}
                       transition={{ duration: 0.7, delay: 0.5 }}
                       className="w-20 h-2 bg-gradient-to-r from-violet-500 to-transparent rounded-full"
                     ></motion.div>
@@ -128,18 +126,18 @@ function Montage() {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative w-32 h-32">
                       <motion.div 
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 3, repeat: Infinity }}
+                        animate={shouldAnimateAmbient ? { scale: [1, 1.1, 1] } : { scale: 1 }}
+                        transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0 }}
                         className="absolute inset-0 rounded-full border-2 border-violet-500/30"
                       ></motion.div>
                       <motion.div 
-                        animate={{ scale: [1, 1.15, 1] }}
-                        transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+                        animate={shouldAnimateAmbient ? { scale: [1, 1.15, 1] } : { scale: 1 }}
+                        transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0, delay: 0.5 }}
                         className="absolute inset-4 rounded-full border-2 border-pink-500/30"
                       ></motion.div>
                       <motion.div 
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                        animate={shouldAnimateAmbient ? { scale: [1, 1.2, 1] } : { scale: 1 }}
+                        transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0, delay: 1 }}
                         className="absolute inset-8 rounded-full border-2 border-purple-500/30"
                       ></motion.div>
                     </div>
@@ -149,15 +147,15 @@ function Montage() {
                 {card.icon === "particles" && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <motion.div 
-                      animate={{ rotate: [0, 45, 0] }}
-                      transition={{ duration: 3, repeat: Infinity }}
+                      animate={shouldAnimateAmbient ? { rotate: [0, 45, 0] } : { rotate: 0 }}
+                      transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0 }}
                       className="grid grid-cols-3 gap-2"
                     >
                       {[...Array(9)].map((_, i) => (
                         <motion.div 
                           key={i} 
-                          animate={{ y: [0, -10, 0] }}
-                          transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
+                          animate={shouldAnimateAmbient ? { y: [0, -10, 0] } : { y: 0 }}
+                          transition={{ duration: 1.5, repeat: shouldAnimateAmbient ? Infinity : 0, delay: i * 0.1 }}
                           className="w-3 h-3 bg-cyan-400 rounded-full"
                         ></motion.div>
                       ))}
@@ -170,8 +168,8 @@ function Montage() {
                     {[12, 24, 16, 32, 16, 24, 12].map((height, i) => (
                       <motion.div 
                         key={i} 
-                        animate={{ scaleY: [1, 1.5, 1] }}
-                        transition={{ duration: 1, repeat: Infinity, delay: i * 0.1 }}
+                        animate={shouldAnimateAmbient ? { scaleY: [1, 1.5, 1] } : { scaleY: 1 }}
+                        transition={{ duration: 1, repeat: shouldAnimateAmbient ? Infinity : 0, delay: i * 0.1 }}
                         className="w-2 bg-blue-500/50 rounded-full"
                         style={{ height: `${height}px` }}
                       ></motion.div>
@@ -184,9 +182,9 @@ function Montage() {
                     <svg className="w-48 h-24 stroke-orange-500 fill-none stroke-2" viewBox="0 0 100 50">
                       <motion.path 
                         d="M0,50 Q25,0 50,25 T100,0"
-                        initial={{ pathLength: 0 }}
+                        initial={{ pathLength: shouldAnimateAmbient ? 0 : 1 }}
                         animate={{ pathLength: 1 }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        transition={{ duration: shouldAnimateAmbient ? 2 : 0, repeat: shouldAnimateAmbient ? Infinity : 0 }}
                       />
                     </svg>
                   </div>
@@ -195,8 +193,8 @@ function Montage() {
                 {card.icon === "arrows" && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <motion.div 
-                      animate={{ x: [0, 10, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
+                      animate={shouldAnimateAmbient ? { x: [0, 10, 0] } : { x: 0 }}
+                      transition={{ duration: 1.5, repeat: shouldAnimateAmbient ? Infinity : 0 }}
                       className="relative"
                     >
                       <svg className="w-32 h-32 text-emerald-400 relative z-10" fill="currentColor" viewBox="0 0 24 24">

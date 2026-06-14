@@ -1,9 +1,12 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { hoverLift, revealUp } from '../lib/motion';
 
 function Automation() {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
+  const shouldReduceMotion = useReducedMotion();
+  const shouldAnimateAmbient = !shouldReduceMotion;
 
   const automations = [
     {
@@ -112,11 +115,6 @@ function Automation() {
     }
   ];
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   const getColorClasses = (color) => {
     const colors = {
       blue: {
@@ -171,15 +169,14 @@ function Automation() {
         <div className="absolute bottom-[20%] right-[10%] w-[50%] h-[50%] bg-purple-900/10 rounded-full blur-[120px]"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-16 relative z-10">
+      <motion.div
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={revealUp}
+        className="max-w-7xl mx-auto px-4 md:px-16 relative z-10"
+      >
         {/* Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
+        <div className="text-center mb-20">
           <p className="text-blue-400 font-medium tracking-widest uppercase mb-4 text-sm">
             Automation Solutions
           </p>
@@ -191,7 +188,7 @@ function Automation() {
           <p className="text-gray-400 text-lg max-w-3xl mx-auto">
             Transform your business with intelligent automation. We build custom workflows that save time, reduce errors, and scale your operations effortlessly.
           </p>
-        </motion.div>
+        </div>
 
         {/* Automation Cards */}
         <div className="grid md:grid-cols-3 gap-8 mb-20">
@@ -200,19 +197,15 @@ function Automation() {
             return (
               <motion.div
                 key={index}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={fadeInUp}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className={`group relative bg-black/50 backdrop-blur-sm rounded-3xl p-8 border ${colorClasses.border} hover:border-opacity-60 transition-all duration-500 ${colorClasses.glow} shadow-xl`}
+                whileHover={hoverLift}
+                className={`group relative bg-black/50 backdrop-blur-sm rounded-3xl p-8 border ${colorClasses.border} hover:border-opacity-60 transition-colors duration-500 ${colorClasses.glow} shadow-xl`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${colorClasses.gradient} to-transparent opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-500`}></div>
                 
                 <div className="relative z-10">
                   <motion.div
-                    animate={{ rotate: [0, 5, 0] }}
-                    transition={{ duration: 3, repeat: Infinity }}
+                    animate={shouldAnimateAmbient ? { rotate: [0, 5, 0] } : { rotate: 0 }}
+                    transition={{ duration: 3, repeat: shouldAnimateAmbient ? Infinity : 0 }}
                     className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${colorClasses.gradient} to-transparent border ${colorClasses.border} flex items-center justify-center mb-6 ${colorClasses.text}`}
                   >
                     {renderIcon(automation.icon)}
@@ -240,18 +233,12 @@ function Automation() {
         </div>
 
         {/* Tools Section */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h3 className="text-3xl md:text-4xl font-black text-white mb-4">
             Powered by Industry Leaders
           </h3>
           <p className="text-gray-500">We work with the best automation platforms</p>
-        </motion.div>
+        </div>
 
         {/* Infinite Scroll Marquee - Two Rows */}
         <div className="space-y-4">
@@ -261,9 +248,8 @@ function Automation() {
             <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-gray-950 via-gray-950/80 to-transparent z-10"></div>
             <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-gray-950 via-gray-950/80 to-transparent z-10"></div>
             
-            <div className="flex animate-marquee">
-              {/* Multiple sets for truly seamless infinite scroll */}
-              {[...Array(4)].map((_, setIndex) => (
+            <div className={`flex ${shouldAnimateAmbient ? 'animate-marquee' : ''}`}>
+              {[0, 1].map((setIndex) => (
                 tools.slice(0, 10).map((tool, index) => (
                   <div
                     key={`first-row-${setIndex}-${index}`}
@@ -293,9 +279,8 @@ function Automation() {
             <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-gray-950 via-gray-950/80 to-transparent z-10"></div>
             <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-gray-950 via-gray-950/80 to-transparent z-10"></div>
             
-            <div className="flex animate-marquee-reverse">
-              {/* Multiple sets for truly seamless infinite scroll */}
-              {[...Array(4)].map((_, setIndex) => (
+            <div className={`flex ${shouldAnimateAmbient ? 'animate-marquee-reverse' : ''}`}>
+              {[0, 1].map((setIndex) => (
                 tools.slice(10, 20).map((tool, index) => (
                   <div
                     key={`second-row-${setIndex}-${index}`}
@@ -321,13 +306,7 @@ function Automation() {
         </div>
 
         {/* CTA */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="text-center mt-16"
-        >
+        <div className="text-center mt-16">
           <motion.a
             href="#contact"
             whileHover={{ scale: 1.05, y: -2 }}
@@ -339,8 +318,8 @@ function Automation() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
             </svg>
           </motion.a>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </section>
   );
 }

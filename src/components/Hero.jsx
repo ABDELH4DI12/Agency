@@ -1,10 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { revealUp } from '../lib/motion';
 
 function Hero() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 }
-  };
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section id="home" className="hero min-h-screen flex items-center justify-center relative overflow-hidden px-4">
@@ -14,19 +12,19 @@ function Hero() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, delay: 0.5 }}
+        transition={{ duration: 1.1, delay: shouldReduceMotion ? 0 : 0.1 }}
         className="floating-shape shape-1 absolute w-72 h-72 rounded-full bg-purple-600/20 blur-3xl"
       ></motion.div>
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, delay: 0.7 }}
+        transition={{ duration: 1.1, delay: shouldReduceMotion ? 0 : 0.2 }}
         className="floating-shape shape-2 absolute w-96 h-96 rounded-full bg-violet-400/15 blur-3xl"
       ></motion.div>
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, delay: 0.9 }}
+        transition={{ duration: 1.1, delay: shouldReduceMotion ? 0 : 0.3 }}
         className="floating-shape shape-3 absolute w-64 h-64 rounded-full bg-fuchsia-500/15 blur-3xl"
       ></motion.div>
 
@@ -34,8 +32,8 @@ function Hero() {
         <motion.div 
           initial="hidden"
           animate="visible"
-          variants={fadeInUp}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          variants={revealUp}
+          custom={shouldReduceMotion ? 0 : 0.05}
           className="overflow-hidden mb-4"
         >
           <p className="hero-tag text-violet-300 text-lg md:text-xl font-medium tracking-widest uppercase">
@@ -45,8 +43,8 @@ function Hero() {
         <motion.div 
           initial="hidden"
           animate="visible"
-          variants={fadeInUp}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          variants={revealUp}
+          custom={shouldReduceMotion ? 0 : 0.12}
           className="overflow-hidden"
         >
           <h1 className="hero-title text-5xl md:text-7xl lg:text-9xl font-black leading-none tracking-tight mb-6">
@@ -59,8 +57,8 @@ function Hero() {
         <motion.div 
           initial="hidden"
           animate="visible"
-          variants={fadeInUp}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          variants={revealUp}
+          custom={shouldReduceMotion ? 0 : 0.19}
           className="overflow-hidden"
         >
           <p className="hero-desc text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10">
@@ -70,8 +68,8 @@ function Hero() {
         <motion.div 
           initial="hidden"
           animate="visible"
-          variants={fadeInUp}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          variants={revealUp}
+          custom={shouldReduceMotion ? 0 : 0.26}
           className="hero-btns flex flex-col sm:flex-row gap-4 justify-center"
         >
           <a 
@@ -92,7 +90,7 @@ function Hero() {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
+        transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.4 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 scroll-indicator"
       >
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
